@@ -1,0 +1,10 @@
+#!/bin/bash -evx
+
+cat <<EOF > $LWRISO_ROOT/home/luwrain/.xinitrc
+exec &> /tmp/xinitrc.log
+export LANG=en_US.UTF-8
+export LUWRAIN_LANG=ru
+setxkbmap -layout "us,ru"
+setxkbmap -option "grp:alt_shift_toggle,grp_led:scroll"
+exec /opt/luwrain/luwrain.sh
+EOF

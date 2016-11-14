@@ -1,0 +1,27 @@
+
+if [[ ! -z $TARGET_ROOT_DISK_DESTROY ]]; then
+	print "Cleanup entire target disk "
+dd bs=512 count=1 if=/dev/zero of=$TARGET_ROOT_DISK_DESTROY >>$LOG 2>&1
+partx $TARGET_ROOT_DISK_DESTROY >>$LOG 2>&1
+	echo ok
+#	print "Write MBR to target disk disk "
+#parted -s $TARGET_ROOT_DISK_DESTROY mklabel $TARGET_ROOT_DISK_MBR >>$LOG 2>&1
+#	echo ok
+	if [[ -z $SWAP_PARTITION_SIZE ]]; then
+		print "Make single root partition entire disk "
+parted -s $TARGET_ROOT_DISK_DESTROY mkpart primary ext2 2048s 100% >>$LOG 2>&1
+		TARGET_ROOT_DEV=$TARGET_GRUB_DEVICE"1"
+		TARGET_SWAP_DEV=
+	else
+		print "Make swap and root partitions entire disk "
+parted -s $TARGET_ROOT_DISK_DESTROY mkpart primary linux-swap 2048s $SWAP_PARTITION_SIZE >>$LOG 2>&1
+parted -s $TARGET_ROOT_DISK_DESTROY mkpart primary ext2 $SWAP_PARTITION_SIZE 100% >>$LOG 2>&1
+		TARGET_ROOT_DEV=$TARGET_GRUB_DEVICE"2"
+		TARGET_SWAP_DEV=$TARGET_GRUB_DEVICE"1"
+mkswap $TARGET_SWAP_DEV >>$LOG 2>&1
+	fi
+
+mkfs.$TARGET_FS -F -F $TARGET_ROOT_DEV >>$LOG 2>&1
+	echo ok
+fi
+

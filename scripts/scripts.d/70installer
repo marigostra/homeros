@@ -1,0 +1,9 @@
+#!/bin/bash -evx
+
+for i in ./install/*; do
+    if echo "$i" | egrep -q '.conf$'; then
+	cp "$i" $LWRISO_ROOT/etc/
+    else
+	cp "$i" $LWRISO_ROOT/sbin/
+    fi
+done

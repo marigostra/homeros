@@ -1,0 +1,79 @@
+#!/bin/bash -evx
+
+cd /iso
+. config.sh
+
+in-chroot apt-get -y remove pulseaudio pulseaudio-utils \
+ubiquity \
+libreoffice-core firefox thunderbird libunity9 \
+network-manager \
+linux-image-4.2.0-16
+
+in-chroot apt-get -y autoremove
+
+echo "nameserver $LWRISO_NAMESERVER" > ./chroot/run/resolvconf/resolv.conf
+echo "nameserver $LWRISO_NAMESERVER" > /run/resolvconf/resolv.conf
+
+cat <<EOF > ./chroot/etc/apt/sources.list
+deb http://download.luwrain.org/ubuntu/ trusty main
+deb http://ru.archive.ubuntu.com/ubuntu/ wily main
+deb http://ru.archive.ubuntu.com/ubuntu/ wily universe
+deb http://ru.archive.ubuntu.com/ubuntu/ wily multiverse
+deb http://ru.archive.ubuntu.com/ubuntu/ wily restricted
+EOF
+
+in-chroot apt-get update
+in-chroot apt-get -y --force-yes install linux-image-generic
+in-chroot apt-get -y --force-yes install brltty libbrlapi-java libbrlapi-jni
+in-chroot apt-get -y --force-yes install libncursesw5 vorbis-tools console-cyrillic acpi ntfs-3g
+in-chroot apt-get -y --force-yes install wpasupplicant
+in-chroot apt-get -y --force-yes install dvd+rw-tools growisofs syslinux syslinux-legacy
+in-chroot apt-get -y --force-yes install voiceman rhvoice espeak yasr eflite
+in-chroot apt-get -y --force-yes install lame sox mpg123 mplayer2 youtube-dl
+in-chroot apt-get -y --force-yes install luwrain-live openjdk-8-jre openjfx
+
+# Locale
+#echo 'LANG="ru_RU.UTF-8"' > ./chroot/etc/default/locale
+
+# Activating startup on tty1
+in-chroot systemctl set-default multi-user.target
+mkdir -p './chroot/etc/systemd/system/getty@tty1.service.d'
+cat <<EOF > './chroot/etc/systemd/system/getty@tty1.service.d/override.conf'
+[Service]
+Environment="LANG=en_US.UTF-8"
+ExecStart=
+ExecStart=-/bin/openvt -c 1 -w -s -f /etc/rc.livecd
+Type=idle
+EOF
+cd ./chroot/etc/systemd
+sed -i -e s/'^.*NAutoVTs.*$'/'NAutoVTs=0'/  logind.conf
+cd ../../..
+in-chroot systemctl enable getty@tty1
+
+# For proper Russian characters in console
+sed -i -e s:'^ExecStart=.*$':'ExecStart=/bin/setupcon': ./chroot/lib/systemd/system/systemd-vconsole-setup.service
+
+# Autostart actions
+sed -i -e s/'^allowed_users=.*$'/'allowed_users=anybody'/ ./chroot/etc/X11/Xwrapper.config
+
+
+
+in-chroot update-ca-certificates -f
+#Disabling pulseaudio for Java
+sed -i -e s/'^\(java.*\)$'/'#\1'/ ./chroot/etc/java-8-openjdk/sound.properties
+sed -i -e s/'^#\(javax.sound.sampled.*=com.sun.*\)$'/'\1'/ ./chroot/etc/java-8-openjdk/sound.properties
+
+
+
+
+find scripts.d -type f -executable | sort | while read l ; do
+    source "$l"
+done &> /iso/log-scripts.txt
+
+if [ -n "$LWRISO_CUSTOMIZING" ]; then
+    find "./customizing/$LWRISO_CUSTOMIZING" -type f | sort | while read l ; do
+	source "$l"
+    done
+fi
+
+# ISO chroot prepared!

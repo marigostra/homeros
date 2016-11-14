@@ -1,0 +1,6 @@
+#!/bin/bash -evx
+
+[ -d ./dist/profile ] && cp -r ./dist/profile/. $LWRISO_ROOT/home/luwrain/
+[ -d ./dist/etc ] && cp -r ./dist/etc/. $LWRISO_ROOT/etc/
+[ -d ./dist/opt ] && cp -r ./dist/opt/. $LWRISO_ROOT/opt/
+[ -d ./dist/bin ] && cp -r ./dist/bin/. $LWRISO_ROOT/usr/local/bin/

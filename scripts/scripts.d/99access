@@ -1,0 +1,4 @@
+#!/bin/bash -evx
+
+chown -R 1000:1000 $LWRISO_ROOT/home/luwrain/
+chown -R root:root $LWRISO_ROOT/opt/

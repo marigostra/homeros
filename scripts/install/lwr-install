@@ -1,0 +1,108 @@
+#!/bin/bash -e
+# Copyright 2015 Roman Volovodov <gr.rPman@gmail.com>
+# Copyright 2012-2015 Michael Pozhidaev <michael.pozhidaev@gmail.com>
+
+. /etc/lwr-install.conf
+. /sbin/lwr-install-utils.sh
+
+THIS="${0##*/}"
+
+#For safety reasons we clean here a couple of variables
+TARGET_GRUB_DEVICE=''
+TARGET_ROOT_DEV=''
+
+while [ -n "$1" ]; do
+    if [ "$1" == --help ]; then
+	print-help
+	exit 0
+    elif [ "$1" == --boot ]; then
+	TARGET_GRUB_DEVICE="$2"
+	shift
+	shift
+    elif [ "$1" == --root ]; then
+	TARGET_ROOT_DEV="$2"
+	shift
+	shift
+    else
+	echo "$THIS:unknown command line option:$1:" >&2
+	exit 1
+    fi
+done
+
+[ -z "$TARGET_ROOT_DEV" ] && echo "$THIS:no root partition given" >&2 && exit 1
+[ -z "$TARGET_GRUB_DEVICE" ] && echo "$THIS:no grub destination device given" >&2 && exit 1
+
+if ! [ -e "$TARGET_ROOT_DEV" ]; then
+    echo "$THIS:root device $TARGET_ROOT_DEV does not exist" >&2
+    exit 1
+fi
+
+if ! [ -e "$TARGET_GRUB_DEVICE" ]; then
+    echo "$THIS:grub destination device $TARGET_GRUB_DEVICE does not exist" >&2
+    exit 1
+fi
+
+umount $TARGET_ROOT_DEV &> /dev/null ||:
+rm -f $LOG
+
+msg 'Formatting root filesystem'
+mkfs.ext4 "$TARGET_ROOT_DEV"  &>> $LOG
+
+msg 'Mounting the root partition of the future system'
+mkdir -p $TARGET_MOUNT &>> $LOG
+mount $TARGET_ROOT_DEV $TARGET_MOUNT &>> $LOG
+msg 'Mounting squashfs image'
+mkdir $SQUASH_MOUNT &>> $LOG
+mount $SQUASH_SRC $SQUASH_MOUNT &>> $LOG
+msg 'Mount points prepared'
+
+msg "Extracting the root filesystem archive to $TARGET_MOUNT"
+cp -afd $SQUASH_MOUNT/. $TARGET_MOUNT/ &>> $LOG
+msg 'Basic  content copied'
+
+msg 'Installing grub'
+for a in dev sys proc; do
+    mount --bind /$a $TARGET_MOUNT/$a &>> $LOG
+done
+grub-install --root-directory=$TARGET_MOUNT $TARGET_GRUB_DEVICE &>> $LOG
+chroot $TARGET_MOUNT grub-mkconfig -o /boot/grub/grub.cfg &>> $LOG
+for a in dev sys proc; do
+    umount $TARGET_MOUNT/$a &>> $LOG
+done
+msg 'grub installed'
+
+msg "Finalizing"
+TARGET_ROOT_UUID="UUID=$(blkid "$TARGET_ROOT_DEV"  | sed s/'^.*UUID="\([^"]*\)".*$'/'\1'/)"
+echo $TARGET_ROOT_DEV / ext4 noatime,errors=remount-ro 0 1 >> $TARGET_MOUNT/etc/fstab
+echo '127.0.0.1 localhost.localdomain localhost' >> $TARGET_MOUNT/etc/hosts
+
+cat <<EOF > $TARGET_MOUNT/etc/rc.livecd
+#!/bin/bash
+
+for i in PCM Speaker; do
+    /usr/bin/amixer set  \$i 100% &> /dev/null
+    /usr/bin/amixer set  \$i unmute &> /dev/null
+done
+/usr/bin/amixer set Master 80% &> /dev/null
+/usr/bin/amixer set Master unmute &> /dev/null
+
+killall brltty
+/sbin/brltty -t ru
+
+export VOICEMAN_LIBAO_DRIVER=alsa
+if ! [ -e /tmp/voiceman.socket ]; then
+    /usr/bin/voicemand -d
+fi
+
+/bin/su - luwrain -c /usr/bin/startx
+EOF
+chmod 755 $TARGET_MOUNT/etc/rc.livecd
+
+#if [[ ! -z $TARGET_SWAP_DEV ]]; then
+#	echo $TARGET_SWAP_DEV none swap defaults 0 0 >> $TARGET_MOUNT/etc/fstab
+#fi
+
+umount $TARGET_MOUNT $SQUASH_MOUNT &>> $LOG
+sync
+
+msg 'LUWRAIN installed successfully'

@@ -1,0 +1,27 @@
+#!/bin/bash -evx
+
+THIS="${0##*/}"
+
+[ -z "$1" ] && echo "$THIS:no Ubuntu image given" >&2 && exit 1
+
+WORK="./hmrtmp-env"
+CHROOT="$WORK/iso/chroot"
+DISK="$1"
+SQUASHFSSRC="$1/casper/filesystem.squashfs"
+
+unsquashfs -d "$WORK" "$SQUASHFSSRC" > /dev/null
+mkdir -p "$WORK/iso/disk"
+cp -r "$DISK/." "$WORK/iso/disk"
+unsquashfs -d "$CHROOT" "$SQUASHFSSRC" > /dev/null
+#cp -r dist install "$WORK/iso"
+cp -r scripts/. "$WORK/iso"
+
+mount --bind /proc "$CHROOT/proc"
+chroot "$WORK" /iso/hmr-prepare-chroot
+umount "$CHROOT/proc"
+
+rm -f "$WORK/iso/disk/casper/filesystem.squashfs"
+chroot "$WORK" /iso/hmr-build-iso
+cp "$WORK/iso/homeros.iso" homeros.iso
+
+# OK!

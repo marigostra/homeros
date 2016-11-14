@@ -1,0 +1,11 @@
+#!/bin/bash -evx
+
+pushd "$LWRISO_ROOT/opt/greeter"
+
+#wget "http://download.luwrain.org/compilation/greeter/$LWRISO_LANG.tar"
+#tar xf "$LWRISO_LANG.tar"
+#cd greeter
+wget "http://download.luwrain.org/media/greeting/dist/$LWRISO_LANG/greeting.ogg"
+
+popd
+

@@ -1,0 +1,13 @@
+#!/bin/bash -evx
+
+cd /iso
+. config.sh
+
+echo "nameserver $LWRISO_NAMESERVER" > /run/resolvconf/resolv.conf
+apt-get update
+apt-get -y --force-yes install syslinux syslinux-common syslinux-utils squashfs-tools genisoimage
+mksquashfs chroot disk/casper/filesystem.squashfs -comp xz > /dev/null
+mkisofs -r -V "LUWRAIN" -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o luwrain.iso disk/ 2> /dev/null 
+isohybrid luwrain.iso
+
+# ISO compiled!
