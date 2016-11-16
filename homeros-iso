@@ -14,7 +14,7 @@ mkdir -p "$WORK/iso/disk"
 cp -r "$DISK/." "$WORK/iso/disk"
 unsquashfs -d "$CHROOT" "$SQUASHFSSRC" > /dev/null
 #cp -r dist install "$WORK/iso"
-cp -r scripts/. "$WORK/iso"
+cp -r dist scripts/. "$WORK/iso"
 
 mount --bind /proc "$CHROOT/proc"
 chroot "$WORK" /iso/hmr-prepare-chroot

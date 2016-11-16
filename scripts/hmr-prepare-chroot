@@ -30,7 +30,15 @@ in-chroot apt-get -y --force-yes install wpasupplicant
 in-chroot apt-get -y --force-yes install dvd+rw-tools growisofs syslinux syslinux-legacy
 in-chroot apt-get -y --force-yes install voiceman rhvoice espeak yasr eflite
 in-chroot apt-get -y --force-yes install lame sox mpg123 mplayer2 youtube-dl
-in-chroot apt-get -y --force-yes install luwrain-live openjdk-8-jre openjfx
+in-chroot apt-get -y --force-yes install openjdk-8-jre openjfx
+
+in-chroot apt-get -y --force-yes install emacspeak w3m w3m-el
+in-chroot apt-get -y --force-yes install mbrola mbrola-en1 freespeech 
+in-chroot apt-get -y --force-yes install libttspico0 libttspico-dev libttspico-utils libttspico-data
+in-chroot apt-get -y --force-yes install pmount openssh-server fetchmail procmail dwm git
+in-chroot apt-get -y --force-yes install vlc mplayer2 geeqie xpdf
+in-chroot apt-get -y --force-yes install openjdk-8-jdk ant gcc g++ make autoconf automake dh-make  dpkg-dev libx11-dev libxft-dev libxinerama-dev
+in-chroot apt-get -y --force-yes install poppler-utils ghostscript
 
 # Locale
 #echo 'LANG="ru_RU.UTF-8"' > ./chroot/etc/default/locale
@@ -56,24 +64,20 @@ sed -i -e s:'^ExecStart=.*$':'ExecStart=/bin/setupcon': ./chroot/lib/systemd/sys
 # Autostart actions
 sed -i -e s/'^allowed_users=.*$'/'allowed_users=anybody'/ ./chroot/etc/X11/Xwrapper.config
 
-
-
 in-chroot update-ca-certificates -f
+
 #Disabling pulseaudio for Java
 sed -i -e s/'^\(java.*\)$'/'#\1'/ ./chroot/etc/java-8-openjdk/sound.properties
 sed -i -e s/'^#\(javax.sound.sampled.*=com.sun.*\)$'/'\1'/ ./chroot/etc/java-8-openjdk/sound.properties
-
-
-
 
 find scripts.d -type f -executable | sort | while read l ; do
     source "$l"
 done &> /iso/log-scripts.txt
 
-if [ -n "$LWRISO_CUSTOMIZING" ]; then
-    find "./customizing/$LWRISO_CUSTOMIZING" -type f | sort | while read l ; do
-	source "$l"
-    done
-fi
+#if [ -n "$LWRISO_CUSTOMIZING" ]; then
+#    find "./customizing/$LWRISO_CUSTOMIZING" -type f | sort | while read l ; do
+#	source "$l"
+#    done
+#fi
 
 # ISO chroot prepared!
