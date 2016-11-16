@@ -1,9 +1,0 @@
-#!/bin/bash -evx
-
-in-chroot useradd -G cdrom,audio,video,users luwrain
-in-chroot cp -r /etc/skel /home/luwrain
-in-chroot chown -R luwrain:luwrain /home/luwrain
-echo 'luwrain ALL=NOPASSWD:ALL' > ./chroot/etc/sudoers.d/luwrain
-chmod 400 ./chroot/etc/sudoers.d/luwrain
-rm -f ./home/luwrain/examples.desktop
-

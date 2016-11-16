@@ -20,7 +20,7 @@ if ! [ -e /tmp/voiceman.socket ]; then
     /usr/bin/voicemand -d
 fi
 
-/bin/su - luwrain -c /usr/bin/startx
+/bin/su - $HMRISO_USER -c /usr/bin/startx
 EOF
 
 chmod 755 $LWRISO_ROOT/etc/rc.livecd
