@@ -1,0 +1,70 @@
+#!/bin/bash -e
+# Copyright 2012-2015 Michael Pozhidaev <michael.pozhidaev@gmail.com>
+
+THIS="${0##*/}"
+IFACE="$1"
+
+[ -z "$IFACE" ] && echo "$THIS:no interface given" >&2 && exit 1
+
+DEST_DIR="$(mktemp -d)"
+
+commit()
+{
+    [ -e "$DEST_DIR/.name" ] && 
+    {
+	NAME="$(cat "$DEST_DIR/.name")"
+	HASH="$(echo "$NAME" | md5sum | cut -f1 -d' ')"
+	mkdir -p "$DEST_DIR/$HASH"
+	for i in name encryption mode quality; do
+	    [ -r "$DEST_DIR/.$i" ] && cp "$DEST_DIR/.$i" "$DEST_DIR/$HASH/$i"
+	done
+    } 
+    for i in name quality mode encryption; do
+	rm -f "$DEST_DIR/.$i"
+    done
+}
+
+# Preparing interface
+rfkill unblock all
+ifconfig "$IFACE" up
+iwlist "$IFACE" scan | egrep -i '(cell|quality|encryption|essid|mode)' |
+while read l; do
+
+    # Beginning new block
+    if echo "$l" | egrep -q '^ *Cell'; then
+	commit
+    fi
+
+    # Reading name of the section
+    if echo "$l" | grep -oi essid &> /dev/null; then 
+	k="${l#*\"}"
+	NAME="${k%\"*}" 
+	echo "$NAME" > "$DEST_DIR/.name"
+    fi 
+
+    # Reading encryption
+    if echo "$l" | grep -q Encryption; then 
+	echo "${l##*:}" > "$DEST_DIR/.encryption"
+    fi
+
+    # Reading mode
+    if echo "$l" | grep -q Mode; then
+	echo "${l##*:}" > "$DEST_DIR/.mode"
+    fi
+
+    # Reading quality
+    if echo "$l" | grep -q Quality; then
+	VALUE="${l#*=}"
+	VALUE="${VALUE%% *}"
+	echo "$VALUE" > "$DEST_DIR/.quality"
+    fi
+
+done  
+
+commit
+
+
+find "$DEST_DIR" -type d -exec chmod 755 '{}' \;
+find "$DEST_DIR" -type f -exec chmod 644 '{}' \;
+
+echo "$DEST_DIR"
