@@ -4,10 +4,10 @@
 function print-help()
 {
 cat <<EOF
-lwr-install: LUWRAIN installer
+homeros-install: Homeros installer
 
 Usage:
-  lwr-install [--help] [--root DEVICE] [--boot DEVICE]
+  homeros-install [--help] [--root DEVICE] [--boot DEVICE]
 
 Options:
   --boot DEVICE - where you want the GRUB loader to be installed

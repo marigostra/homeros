@@ -1,6 +1,6 @@
 #!/bin/bash -evx
 
-for i in ./install/*; do
+for i in ./installer/*; do
     if echo "$i" | egrep -q '.conf$'; then
 	cp "$i" $LWRISO_ROOT/etc/
     else

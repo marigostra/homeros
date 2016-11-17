@@ -1,5 +1,0 @@
-#!/bin/bash -e
-
-. /etc/lwr-install.conf
-
-/sbin/lwr-install --root $TARGET_ROOT_DEV --boot $TARGET_GRUB_DEVICE

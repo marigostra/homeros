@@ -74,10 +74,4 @@ find scripts.d -type f -executable | sort | while read l ; do
     source "$l"
 done &> /iso/log-scripts.txt
 
-#if [ -n "$LWRISO_CUSTOMIZING" ]; then
-#    find "./customizing/$LWRISO_CUSTOMIZING" -type f | sort | while read l ; do
-#	source "$l"
-#    done
-#fi
-
 # ISO chroot prepared!

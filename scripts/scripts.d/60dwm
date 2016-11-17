@@ -1,0 +1,13 @@
+#!/bin/bash -evx
+
+cat <<EOF > ./chroot/home/$HMRISO_USER/.dwm/build
+#!/bin/bash -e
+
+cd /home/$HMRISO_USER/.dwm
+make 
+EOF
+
+chmod 755 ./chroot/home/$HMRISO_USER/.dwm/build
+
+in-chroot  /home/$HMRISO_USER/.dwm/build
+chown -R 1000:1000 ./chroot/home/$HMRISO_USER/.dwm
