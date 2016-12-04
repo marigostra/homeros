@@ -35,7 +35,7 @@ in-chroot apt-get -y --force-yes install openjdk-8-jre openjfx
 in-chroot apt-get -y --force-yes install emacspeak w3m w3m-el
 in-chroot apt-get -y --force-yes install mbrola mbrola-en1 freespeech 
 in-chroot apt-get -y --force-yes install libttspico0 libttspico-dev libttspico-utils libttspico-data
-in-chroot apt-get -y --force-yes install pmount openssh-server fetchmail procmail dwm git
+in-chroot apt-get -y --force-yes install pmount openssh-server fetchmail procmail dwm git smartmontools
 in-chroot apt-get -y --force-yes install vlc mplayer2 geeqie xpdf
 in-chroot apt-get -y --force-yes install openjdk-8-jdk ant gcc g++ make autoconf automake dh-make  dpkg-dev libx11-dev libxft-dev libxinerama-dev
 in-chroot apt-get -y --force-yes install poppler-utils ghostscript
