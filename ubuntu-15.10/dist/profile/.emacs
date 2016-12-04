@@ -59,3 +59,7 @@
 	    (setq dired-omit-extensions '("~" ".o" ".a" ".la" ".toc" ".aux" ".log"))
 	    (setq dired-omit-files "^\\.")
 ))
+
+;;Homeros startup sound
+(setq emacspeak-play-emacspeak-startup-icon nil)
+(start-process "homerossnd" nil "ogg123" "-d" "alsa" "/opt/homeros.ogg")
