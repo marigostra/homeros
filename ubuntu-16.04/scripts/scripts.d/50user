@@ -1,0 +1,9 @@
+#!/bin/bash -evx
+
+in-chroot useradd -G cdrom,audio,video,users,plugdev $HMRISO_USER
+in-chroot cp -r /etc/skel /home/$HMRISO_USER
+in-chroot chown -R $HMRISO_USER:$HMRISO_USER /home/$HMRISO_USER
+echo "$HMRISO_USER ALL=NOPASSWD:ALL" > ./chroot/etc/sudoers.d/$HMRISO_USER
+chmod 400 ./chroot/etc/sudoers.d/$HMRISO_USER
+rm -f ./home/$HMRISO_USER/examples.desktop
+

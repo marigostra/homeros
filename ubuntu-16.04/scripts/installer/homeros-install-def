@@ -1,0 +1,5 @@
+#!/bin/bash -e
+
+. /etc/hmr-install.conf
+
+/sbin/homeros-install --root $TARGET_ROOT_DEV --boot $TARGET_GRUB_DEVICE
