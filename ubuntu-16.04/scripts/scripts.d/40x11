@@ -1,0 +1,7 @@
+
+#echo 'allowed_users=anybody' > ./chroot/etc/X11/Xwrapper.config
+#sed -i -e s/'^allowed_users=.*$'/'allowed_users=anybody'/ ./chroot/etc/X11/Xwrapper.config
+
+# Dirty hack, but it's unclear how to bypass that
+# Ubuntu 16.04 no longer using Xorg.wrap, so we get all the errors related to 'permission denies' as Xorg launches with restricted rights
+chmod 4755 ./chroot/usr/lib/xorg/Xorg

@@ -26,6 +26,7 @@ EOF
 
 in-chroot apt-get update
 in-chroot apt-get -y --force-yes install linux-image-generic
+#in-chroot apt-get -y --force-yes install xserver-xorg-legacy
 in-chroot apt-get -y --force-yes install brltty libbrlapi-java libbrlapi-jni
 in-chroot apt-get -y --force-yes install libncursesw5 vorbis-tools console-cyrillic acpi ntfs-3g
 in-chroot apt-get -y --force-yes install wpasupplicant
@@ -66,9 +67,6 @@ in-chroot systemctl enable getty@tty1
 # FIXME!
 #sed -i -e s:'^ExecStart=.*$':'ExecStart=/bin/setupcon': ./chroot/lib/systemd/system/systemd-vconsole-setup.service
 
-# Autostart actions
-#FIXME:
-#sed -i -e s/'^allowed_users=.*$'/'allowed_users=anybody'/ ./chroot/etc/X11/Xwrapper.config
 
 in-chroot update-ca-certificates -f
 
