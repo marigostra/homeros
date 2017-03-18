@@ -48,20 +48,6 @@ in-chroot apt-get -y --force-yes install poppler-utils ghostscript
 # Locale
 #echo 'LANG="ru_RU.UTF-8"' > ./chroot/etc/default/locale
 
-# Activating startup on tty1
-in-chroot systemctl set-default multi-user.target
-mkdir -p './chroot/etc/systemd/system/getty@tty1.service.d'
-cat <<EOF > './chroot/etc/systemd/system/getty@tty1.service.d/override.conf'
-[Service]
-Environment="LANG=en_US.UTF-8"
-ExecStart=
-ExecStart=-/bin/openvt -c 1 -w -s -f /etc/rc.livecd
-Type=idle
-EOF
-cd ./chroot/etc/systemd
-sed -i -e s/'^.*NAutoVTs.*$'/'NAutoVTs=0'/  logind.conf
-cd ../../..
-in-chroot systemctl enable getty@tty1
 
 # For proper Russian characters in console
 # FIXME!

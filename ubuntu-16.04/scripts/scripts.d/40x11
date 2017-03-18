@@ -1,3 +1,4 @@
+#!/bin/bash -e
 
 #echo 'allowed_users=anybody' > ./chroot/etc/X11/Xwrapper.config
 #sed -i -e s/'^allowed_users=.*$'/'allowed_users=anybody'/ ./chroot/etc/X11/Xwrapper.config
