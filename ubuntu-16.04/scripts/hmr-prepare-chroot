@@ -18,10 +18,10 @@ echo "nameserver $LWRISO_NAMESERVER" > /run/resolvconf/resolv.conf
 
 cat <<EOF > ./chroot/etc/apt/sources.list
 deb http://download.luwrain.org/ubuntu/ trusty main
-deb http://ru.archive.ubuntu.com/ubuntu/ xenial main
-deb http://ru.archive.ubuntu.com/ubuntu/ xenial universe
-deb http://ru.archive.ubuntu.com/ubuntu/ xenial multiverse
-deb http://ru.archive.ubuntu.com/ubuntu/ xenial restricted
+deb http://security.ubuntu.com/ubuntu/ xenial-security main restricted universe multiverse
+deb http://ru.archive.ubuntu.com/ubuntu/ xenial-updates main restricted universe multiverse
+deb http://ru.archive.ubuntu.com/ubuntu/ xenial main restricted universe multiverse
+
 EOF
 
 in-chroot apt-get update
@@ -31,7 +31,8 @@ in-chroot apt-get -y --force-yes install brltty libbrlapi-java libbrlapi-jni
 in-chroot apt-get -y --force-yes install libncursesw5 vorbis-tools console-cyrillic acpi ntfs-3g
 in-chroot apt-get -y --force-yes install wpasupplicant
 in-chroot apt-get -y --force-yes install dvd+rw-tools growisofs syslinux syslinux-legacy
-in-chroot apt-get -y --force-yes install voiceman rhvoice espeak yasr eflite
+in-chroot apt-get -y --force-yes install espeak yasr eflite
+in-chroot apt-get -y --force-yes install  voiceman rhvoice 
 in-chroot apt-get -y --force-yes install lame sox mpg123 mplayer youtube-dl
 in-chroot apt-get -y --force-yes install openjdk-8-jre openjfx
 
