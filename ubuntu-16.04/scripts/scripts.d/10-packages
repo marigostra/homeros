@@ -1,17 +1,11 @@
 
-#in-chroot apt-get -y --force-yes install xserver-xorg-legacy
-in-chroot apt-get -y --force-yes install libncursesw5 vorbis-tools console-cyrillic acpi ntfs-3g
-in-chroot apt-get -y --force-yes install wpasupplicant
-in-chroot apt-get -y --force-yes install dvd+rw-tools growisofs syslinux syslinux-legacy
-in-chroot apt-get -y --force-yes install espeak yasr eflite
-in-chroot apt-get -y --force-yes install  voiceman rhvoice 
-in-chroot apt-get -y --force-yes install lame sox mpg123 mplayer
-in-chroot apt-get -y --force-yes install emacspeak w3m w3m-el
-in-chroot apt-get -y --force-yes install pmount openssh-server fetchmail procmail dwm git smartmontools
-#in-chroot apt-get -y --force-yes install pmount fetchmail procmail dwm git smartmontools
-#in-chroot apt-get -y --force-yes install vlc mplayer geeqie xpdf
-in-chroot apt-get -y --force-yes install mplayer geeqie xpdf
+install-pkg voiceman rhvoice espeak yasr eflite
+install-pkg emacspeak w3m w3m-el
+install-pkg pmount openssh-server fetchmail procmail smartmontools
+install-pkg wpasupplicant acpi ntfs-3g dvd+rw-tools growisofs syslinux syslinux-legacy
+install-pkg lame sox mpg123 mplayer vorbis-tools geeqie xpdf
+install-pkg libncursesw5 console-cyrillic 
+
+# For DWM
 install-pkg gcc git
 install-pkg libx11-dev libxft-dev libxinerama-dev
-
-#in-chroot apt-get -y --force-yes install openjdk-8-jdk ant gcc g++ make autoconf automake dh-make  dpkg-dev libx11-dev libxft-dev libxinerama-dev

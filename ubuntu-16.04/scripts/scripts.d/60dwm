@@ -14,4 +14,5 @@ EOF
 
 chmod 755 ./chroot/home/$HMRISO_USER/build-dwm
 in-chroot  /home/$HMRISO_USER/build-dwm
+rm -f ./chroot/home/$HMRISO_USER/build-dwm
 chown -R 1000:1000 ./chroot/home/$HMRISO_USER/.dwm
