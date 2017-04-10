@@ -1,13 +1,17 @@
 #!/bin/bash -evx
 
-cat <<EOF > ./chroot/home/$HMRISO_USER/.dwm/build
+cat <<EOF > ./chroot/home/$HMRISO_USER/build-dwm
 #!/bin/bash -e
 
-cd /home/$HMRISO_USER/.dwm
+cd /home/$HMRISO_USER/
+git clone http://download.luwrain.org/git/dwm.git
+mv dwm .dwm
+cd .dwm
+git branch msp origin/msp
+git checkout msp
 make 
 EOF
 
-chmod 755 ./chroot/home/$HMRISO_USER/.dwm/build
-
-#in-chroot  /home/$HMRISO_USER/.dwm/build
+chmod 755 ./chroot/home/$HMRISO_USER/build-dwm
+in-chroot  /home/$HMRISO_USER/build-dwm
 chown -R 1000:1000 ./chroot/home/$HMRISO_USER/.dwm

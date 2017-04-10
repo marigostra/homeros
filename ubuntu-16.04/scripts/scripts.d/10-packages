@@ -11,4 +11,7 @@ in-chroot apt-get -y --force-yes install pmount openssh-server fetchmail procmai
 #in-chroot apt-get -y --force-yes install pmount fetchmail procmail dwm git smartmontools
 #in-chroot apt-get -y --force-yes install vlc mplayer geeqie xpdf
 in-chroot apt-get -y --force-yes install mplayer geeqie xpdf
+install-pkg gcc git
+install-pkg libx11-dev libxft-dev libxinerama-dev
+
 #in-chroot apt-get -y --force-yes install openjdk-8-jdk ant gcc g++ make autoconf automake dh-make  dpkg-dev libx11-dev libxft-dev libxinerama-dev

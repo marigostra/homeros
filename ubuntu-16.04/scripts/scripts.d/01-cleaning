@@ -9,7 +9,7 @@ remove-pkg hunspell-de-at hunspell-de-ch hunspell-de-de hunspell-en-ca hunspell-
 remove-pkg openoffice.org-hyphenation            metacity-common                       ubuntu-wallpapers ubuntu-mobile-icons                   ubuntu-core-launcher                  speech-dispatcher                     sound-theme-freedesktop               rhythmbox-data
 remove-pkg libsane-common liborbit-2.0 a11y-profile-manager at-spi2-core
 remove-pkg gconf-service gedit-common imagemagick-common
-remove-pkg gcc-5 gdb
+remove-pkg gdb
 remove-pkg glib-networking-common gvfs-common
 remove-pkg transmission-common totem-common shotwell-common openprinting-ppds nautilus-data make
 remove-pkg ttf-ancient-fonts-symbola fonts-stix fonts-noto-cjk
