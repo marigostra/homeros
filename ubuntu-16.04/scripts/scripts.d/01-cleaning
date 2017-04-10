@@ -1,0 +1,37 @@
+
+remove-pkg pulseaudio pulseaudio-utils
+remove-pkg libreoffice-common libreoffice-core thunderbird libunity9
+remove-pkg libgtk-3-common libgtk2.0-common libqtcore4 libqt5core5a
+remove-pkg ubuntu-touch-sounds ubuntu-sounds
+remove-pkg wbrazilian wfrench witalian wngerman wogerman wportuguese wspanish wswiss
+remove-pkg language-pack-de language-pack-de-base language-pack-es language-pack-es-base language-pack-fr language-pack-fr-base language-pack-it language-pack-it-base language-pack-pt language-pack-pt-base language-pack-zh-hans language-pack-zh-hans-base
+remove-pkg hunspell-de-at hunspell-de-ch hunspell-de-de hunspell-en-ca hunspell-en-za hunspell-fr hunspell-fr-classical hunspell-it
+remove-pkg openoffice.org-hyphenation            metacity-common                       ubuntu-wallpapers ubuntu-mobile-icons                   ubuntu-core-launcher                  speech-dispatcher                     sound-theme-freedesktop               rhythmbox-data
+remove-pkg libsane-common liborbit-2.0 a11y-profile-manager at-spi2-core
+remove-pkg gconf-service gedit-common imagemagick-common
+remove-pkg gcc-5 gdb
+remove-pkg glib-networking-common gvfs-common
+remove-pkg transmission-common totem-common shotwell-common openprinting-ppds nautilus-data make
+remove-pkg ttf-ancient-fonts-symbola fonts-stix fonts-noto-cjk
+remove-pkg tegaki-zinnia-japanese app-install-data ubuntu-wallpapers-xenial
+
+remove-pkg $(apt-cache search language-pack-gnome | cut -f1 -d' ')
+remove-pkg $(apt-cache search gnome | grep ^gnome- | cut -f1 -d' ')
+remove-pkg $(apt-cache search gnome | grep ^libgnome | cut -f1 -d' ')
+remove-pkg $(apt-cache search unity | grep ^unity | cut -f1 -d' ')
+remove-pkg $(apt-cache search ubiquity | grep ^ubiquity | cut -f1 -d' ')
+remove-pkg $(apt-cache search myspell | grep ^myspell | cut -f1 -d' ')
+remove-pkg $(apt-cache search firefox | grep ^firefox | cut -f1 -d' ')
+remove-pkg $(apt-cache search fonts | egrep '^fonts-(tlwg|tibetan|takao|sil|nanum|lohit|lao|khmeros|guru|arphic)' | cut -f1 -d' ')
+remove-pkg $(apt-cache search compiz | grep ^compiz | cut -f1 -d' ')
+remove-pkg $(apt-cache search libgphoto | grep ^libgphoto | cut -f1 -d' ')
+remove-pkg $(apt-cache search libfreerdp | grep ^libfreerdp | cut -f1 -d' ')
+remove-pkg $(apt-cache search cups | grep ^cups | cut -f1 -d' ')
+remove-pkg $(apt-cache search evolution | grep ^evolution | cut -f1 -d' ')
+remove-pkg $(apt-cache search fcitx | grep ^fcitx | cut -f1 -d' ')
+remove-pkg $(apt-cache search gir1 | grep ^gir1 | cut -f1 -d' ')
+remove-pkg $(apt-cache search libgnome | grep ^libgnome | cut -f1 -d' ')
+remove-pkg $(apt-cache search printer-driver | grep ^printer-driver | cut -f1 -d' ')
+remove-pkg $(apt-cache search mythes | grep ^mythes | cut -f1 -d' ')
+
+chroot-run apt-get -y autoremove

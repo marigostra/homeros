@@ -1,7 +1,0 @@
-#!/bin/bash -evx
-
-sed  -i -e s/'^RUN_BRLTTY=.*$'/'RUN_BRLTTY=yes'/ ./chroot/etc/default/brltty
-
-# Russian only
-sed  -i -e s/'^ARGUMENTS=.*$'/'ARGUMENTS="-q -t ru"'/ ./chroot/etc/default/brltty
-sed -i -e s/'^.*text-table.*Russian.*$'/'text-table ru'/ ./chroot/etc/brltty.conf

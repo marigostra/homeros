@@ -1,68 +1,24 @@
 #!/bin/bash -evx
 
 cd /iso
+. base.sh
 . config.sh
 
-in-chroot apt-get -y remove pulseaudio pulseaudio-utils \
-ubiquity \
-libreoffice-core firefox thunderbird libunity9 \
-network-manager 
+#in-chroot apt-get -y remove pulseaudio pulseaudio-utils \
+#ubiquity \
+#libreoffice-core firefox thunderbird libunity9 \
+#network-manager 
 #linux-image-4.2.0-16
-
-
-in-chroot apt-get -y autoremove
-
-
-echo "nameserver $LWRISO_NAMESERVER" > ./chroot/run/resolvconf/resolv.conf
-echo "nameserver $LWRISO_NAMESERVER" > /run/resolvconf/resolv.conf
-
-cat <<EOF > ./chroot/etc/apt/sources.list
-deb http://download.luwrain.org/ubuntu/ trusty main
-deb http://security.ubuntu.com/ubuntu/ xenial-security main restricted universe multiverse
-deb http://ru.archive.ubuntu.com/ubuntu/ xenial-updates main restricted universe multiverse
-deb http://ru.archive.ubuntu.com/ubuntu/ xenial main restricted universe multiverse
-
-EOF
-
-in-chroot apt-get update
-in-chroot apt-get -y --force-yes install linux-image-generic
-#in-chroot apt-get -y --force-yes install xserver-xorg-legacy
-in-chroot apt-get -y --force-yes install brltty libbrlapi-java libbrlapi-jni
-in-chroot apt-get -y --force-yes install libncursesw5 vorbis-tools console-cyrillic acpi ntfs-3g
-in-chroot apt-get -y --force-yes install wpasupplicant
-in-chroot apt-get -y --force-yes install dvd+rw-tools growisofs syslinux syslinux-legacy
-in-chroot apt-get -y --force-yes install espeak yasr eflite
-in-chroot apt-get -y --force-yes install  voiceman rhvoice 
-in-chroot apt-get -y --force-yes install lame sox mpg123 mplayer youtube-dl
-in-chroot apt-get -y --force-yes install openjdk-8-jre openjfx
-
-in-chroot apt-get -y --force-yes install emacspeak w3m w3m-el
-in-chroot apt-get -y --force-yes install libttspico0 libttspico-dev libttspico-utils libttspico-data
-#in-chroot apt-get -y --force-yes install pmount openssh-server fetchmail procmail dwm git smartmontools
-in-chroot apt-get -y --force-yes install pmount fetchmail procmail dwm git smartmontools
-#in-chroot apt-get -y --force-yes install vlc mplayer geeqie xpdf
-in-chroot apt-get -y --force-yes install mplayer geeqie xpdf
-#in-chroot apt-get -y --force-yes install openjdk-8-jdk ant gcc g++ make autoconf automake dh-make  dpkg-dev libx11-dev libxft-dev libxinerama-dev
-in-chroot apt-get -y --force-yes install openjdk-8-jdk ant gcc g++ make autoconf automake dh-make  dpkg-dev libx11-dev libxinerama-dev
-in-chroot apt-get -y --force-yes install poppler-utils ghostscript
+#in-chroot apt-get -y autoremove
 
 # Locale
 #echo 'LANG="ru_RU.UTF-8"' > ./chroot/etc/default/locale
-
-
 # For proper Russian characters in console
 # FIXME!
 #sed -i -e s:'^ExecStart=.*$':'ExecStart=/bin/setupcon': ./chroot/lib/systemd/system/systemd-vconsole-setup.service
 
-
-in-chroot update-ca-certificates -f
-
-#Disabling pulseaudio for Java
-sed -i -e s/'^\(java.*\)$'/'#\1'/ ./chroot/etc/java-8-openjdk/sound.properties
-sed -i -e s/'^#\(javax.sound.sampled.*=com.sun.*\)$'/'\1'/ ./chroot/etc/java-8-openjdk/sound.properties
-
 find scripts.d -type f -executable | sort | while read l ; do
     source "$l"
-done &> /iso/log-scripts.txt
+done
 
 # ISO chroot prepared!

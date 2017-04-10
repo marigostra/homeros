@@ -1,0 +1,2 @@
+
+chroot-run apt-get install --reinstall linux-image-4.8.0-36-generic
