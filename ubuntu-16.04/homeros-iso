@@ -4,7 +4,7 @@ THIS="${0##*/}"
 
 [ -z "$1" ] && echo "$THIS:no Ubuntu image given" >&2 && exit 1
 
-WORK="./hmrtmp-env"
+WORK="./tmp-env"
 CHROOT="$WORK/iso/chroot"
 DISK="$1"
 SQUASHFSSRC="$1/casper/filesystem.squashfs"
@@ -17,11 +17,11 @@ unsquashfs -d "$CHROOT" "$SQUASHFSSRC" > /dev/null
 cp -r dist scripts/. "$WORK/iso"
 
 mount --bind /proc "$CHROOT/proc"
-chroot "$WORK" /iso/hmr-prepare-chroot
+chroot "$WORK" /iso/homeros-prepare-chroot
 umount "$CHROOT/proc"
 
 rm -f "$WORK/iso/disk/casper/filesystem.squashfs"
-chroot "$WORK" /iso/hmr-build-iso
+chroot "$WORK" /iso/homeros-build-iso
 cp "$WORK/iso/homeros.iso" homeros.iso
 
 # OK!

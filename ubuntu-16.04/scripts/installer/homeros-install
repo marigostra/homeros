@@ -86,9 +86,6 @@ done
 /usr/bin/amixer set Master 80% &> /dev/null
 /usr/bin/amixer set Master unmute &> /dev/null
 
-killall brltty
-/sbin/brltty -t ru
-
 export VOICEMAN_LIBAO_DRIVER=alsa
 if ! [ -e /tmp/voiceman.socket ]; then
     /usr/bin/voicemand -d
