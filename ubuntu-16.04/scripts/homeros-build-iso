@@ -20,7 +20,7 @@ rm -rf disk/casper/filesystem.squashfs.gpg disk/md5sum.txt disk/pool disk/ubuntu
 echo "Homeros - Release $HMRISO_ARCH ($HMRISO_DATE)" > disk/.disk/info
 
 pushd disk
-find -type f | while read l; do
+find -type f '!' -name isolinux.bin '!' -name boot.cat | while read l; do
 md5sum "$l"
 done > ../md5sum.txt
 popd 

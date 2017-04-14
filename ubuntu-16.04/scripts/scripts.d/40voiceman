@@ -1,7 +1,6 @@
-#!/bin/bash -evx
 
 cat <<EOF > ./chroot/etc/voiceman.conf
-# VoiceMan configuration for LUWRAIN distribution
+# VoiceMan configuration for Homeros
 # Michael Pozhidaev <michael.pozhidaev@gmail.com>
 
 [Global]
@@ -31,24 +30,7 @@ rate aver = 1.6
 rate min = 2
 EOF
 
-#cat <<EOF > ./chroot/etc/voiceman.d/rhvoice-eng.output
-#[output]
-#name = RHVoice-eng
-#type = command
-#lang = eng
-#synth command = "RHVoice -r %r -p %p | voiceman-trim --words"
-#alsa player command = "exec aplay -"
-#pitch num digits after dot = 2
-#pitch min = "0.1"
-#pitch aver = 1
-#pitch max = "1.9"
-#rate num digits after dot = 2
-#rate max = "0.5"
-#rate aver = 1.6
-#rate min = 2
-#EOF
-
-cat <<EOF > ./chroot/etc/voiceman.d/rhvoice-eng.output
+cat <<EOF > ./chroot/etc/voiceman.d/espeak-eng.output
 [output]
 name = espeak
 type = command
