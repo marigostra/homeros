@@ -1,5 +1,6 @@
 
 export LWRISO_ROOT=/iso/chroot
+export HMRISO_ROOT=/iso/chroot
 
 in-chroot()
 {
