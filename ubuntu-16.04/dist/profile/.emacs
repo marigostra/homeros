@@ -18,6 +18,7 @@
 (global-set-key (kbd "M-и") 'backward-word)
 (global-set-key (kbd "C-ц") 'kill-region)
 (global-set-key (kbd "M-ц") 'kill-ring-save)
+(global-set-key (kbd "C-н") 'yank)
 
 (setq make-backup-files nil)
 
@@ -58,6 +59,14 @@
 	    (setq dired-omit-files-p t)
 	    (setq dired-omit-extensions '("~" ".o" ".a" ".la" ".toc" ".aux" ".log"))
 	    (setq dired-omit-files "^\\.")
+	    ))
+
+;;java
+(require 'cc-mode)
+(add-hook 'java-mode-hook (lambda () 
+			    (setq c-basic-offset 4)
+			    (c-set-offset  'substatement-open 0)
+			    (c-set-offset  'statement-cont 0)
 ))
 
 ;;Homeros startup sound
