@@ -41,6 +41,8 @@ EOF
 chroot-run gcc -o/usr/lib/xorg/Xorg.wrap /tmp/xwrapper.c
 chmod 4755 "$HMRISO_ROOT/usr/lib/xorg/Xorg.wrap"
 
+rm -f "$HMRISO_ROOT/etc/X11/Xwrapper.config"
+
 #echo 'allowed_users=anybody' > ./chroot/etc/X11/Xwrapper.config
 #sed -i -e s/'^allowed_users=.*$'/'allowed_users=anybody'/ "$HMRISO_ROOT/etc/X11/Xwrapper.config"
 # Dirty hack, but it's unclear how to bypass that
