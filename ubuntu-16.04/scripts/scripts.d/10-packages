@@ -37,7 +37,7 @@ EOF
 
 install-pkg voiceman rhvoice espeak yasr eflite
 install-pkg emacspeak w3m w3m-el
-install-pkg pmount openssh-server fetchmail procmail smartmontools
+install-pkg pmount openssh-server fetchmail procmail smartmontools ntpdate
 install-pkg wpasupplicant acpi ntfs-3g dvd+rw-tools growisofs syslinux syslinux-legacy
 install-pkg lame sox mpg123 mplayer vorbis-tools geeqie xpdf
 install-pkg libncursesw5 console-cyrillic 
