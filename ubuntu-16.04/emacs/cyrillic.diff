@@ -1,0 +1,71 @@
+diff -ur orig/dtk-speak.el new/dtk-speak.el
+--- orig/dtk-speak.el	2016-03-07 20:34:08.543543849 +0600
++++ new/dtk-speak.el	2016-03-07 20:35:15.187542726 +0600
+@@ -1517,8 +1517,9 @@
+   (declare (special dtk-character-to-speech-table))
+   (if  (eq (char-charset char) 'ascii)
+       (aref dtk-character-to-speech-table char )
+-    (or (dtk-unicode-short-name-for-char char)
+-        (format "octal %o"  char ))))
++      (format "%c" char)))
++;;    (or (dtk-unicode-short-name-for-char char)
++;;        (format "octal %o"  char ))))
+ 
+ ;;}}}
+ ;;{{{  interactively selecting the server:
+@@ -1884,7 +1885,7 @@
+           (when pronunciation-table
+             (tts-apply-pronunciations
+              pronunciation-table))
+-          (dtk-unicode-replace-chars mode)
++;;          (dtk-unicode-replace-chars mode)
+           (dtk-handle-repeating-patterns mode)
+           (dtk-quote mode))
+         (goto-char (point-min))
+diff -ur orig/emacspeak-speak.el new/emacspeak-speak.el
+--- orig/emacspeak-speak.el	2016-03-07 20:34:08.543543849 +0600
++++ new/emacspeak-speak.el	2016-03-08 00:55:16.151280008 +0600
+@@ -762,7 +762,7 @@
+      "sEnterregular expression to match lines that are decorative ASCII: ")
+ 
+ (defcustom emacspeak-unspeakable-rule
+-  "^[^0-9a-zA-Z]+$"
++  "^\\W+$"
+   "*Pattern to match lines of special chars.
+ This is a regular expression that matches lines containing only
+ non-alphanumeric characters.  emacspeak will generate a tone
+@@ -1055,7 +1055,7 @@
+     (cond
+      ((emacspeak-is-alpha-p char) (dtk-letter (char-to-string
+                                                char )))
+-     ((> char 128) (emacspeak-speak-char-name char))
++;;     ((> char 128) (emacspeak-speak-char-name char))
+      (t (dtk-dispatch (dtk-char-to-speech char ))))))
+ ;;;###autoload
+ (defun emacspeak-speak-char (&optional prefix)
+@@ -1067,7 +1067,7 @@
+     (when char
+       (cond
+        ((stringp display) (dtk-speak display))
+-       ((> char 128) (emacspeak-speak-char-name char))
++;;       ((> char 128) (emacspeak-speak-char-name char))
+        ((and (not prefix)
+              (emacspeak-is-alpha-p char))
+         (dtk-speak (emacspeak-get-phonetic-string char )))
+@@ -1082,14 +1082,14 @@
+     (when char
+       (cond
+        ((stringp display) (dtk-speak display))
+-       ((> char 128) (emacspeak-speak-char-name char))
++;;       ((> char 128) (emacspeak-speak-char-name char))
+        (t (emacspeak-speak-this-char char))))))
+ 
+ ;;;###autoload
+ (defun emacspeak-speak-char-name (char)
+   "tell me what this is"
+   (interactive)
+-  (dtk-speak (dtk-unicode-name-for-char char)))
++  (dtk-speak (format "%c" char)))
+ 
+ ;;}}}
+ ;;{{{ emacspeak-speak-display-char
