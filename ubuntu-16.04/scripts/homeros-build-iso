@@ -18,12 +18,27 @@ mksquashfs chroot disk/casper/filesystem.squashfs -comp xz > /dev/null
 
 rm -rf disk/casper/filesystem.squashfs.gpg disk/md5sum.txt disk/pool disk/ubuntu 
 echo "Homeros - Release $HMRISO_ARCH ($HMRISO_DATE)" > disk/.disk/info
+echo 'http://marigostra.ru/projects/homeros/' > disk/.disk/release_notes_url
+sed -i -e s/'Ubuntu.*$'/'Homeros '$HMRISO_DATE' - Release '$HMRISO_ARCH/ disk/README.diskdefines
 
-pushd disk
+cat <<EOF > disk/README.ru.txt
+
+  Homeros
+
+Дистрибутив на основе Ubuntu Linux с речевым окружением Emacspeak в
+качестве основной пользовательской среды. Предназначен для опытных
+русскоговорящих пользователей GNU/Linux с нарушениями зрения.
+
+Подробную информацию см. на странице:
+http://marigostra.ru/projects/homeros/
+
+EOF
+
+pushd disk > /dev/null
 find -type f '!' -name isolinux.bin '!' -name boot.cat | while read l; do
 md5sum "$l"
 done > ../md5sum.txt
-popd 
+popd  > /dev/null
 mv md5sum.txt disk
 
 mkisofs -r -V "Homeros $HMRISO_ARCH $(date --iso-8601)" -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o homeros.iso disk/ 2> /dev/null 
