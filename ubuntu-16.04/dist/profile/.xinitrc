@@ -1,5 +1,5 @@
 
-export LANG=en_US.UTF-8
+export LANG=ru_RU.UTF-8
 export VOICEMAN_EMACSPEAK_RATE_FRACTION=2
 
 setxkbmap -layout "us,ru"
