@@ -1,4 +1,4 @@
-#!/bin/bash -evx
+#!/bin/bash -e
 
 THIS="${0##*/}"
 
@@ -24,4 +24,4 @@ rm -f "$WORK/iso/disk/casper/filesystem.squashfs"
 chroot "$WORK" /iso/homeros-build-iso
 cp "$WORK/iso/homeros.iso" homeros.iso
 
-# OK!
+echo 'OK!'
