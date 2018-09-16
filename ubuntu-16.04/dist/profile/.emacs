@@ -11,6 +11,7 @@
 (global-set-key [f8] 'w3m-browse-url)
 (global-set-key [f9] 'compile)
 (global-set-key [f10] 'switch-to-buffer)
+(global-set-key [f11] 'delete-other-windows)
 (global-set-key [S-f3] 'shell-command)
 (global-set-key [S-f4] 'shell)
 
