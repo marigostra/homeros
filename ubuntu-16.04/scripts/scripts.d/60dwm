@@ -4,11 +4,11 @@ cat <<EOF > ./chroot/home/$HMRISO_USER/build-dwm
 #!/bin/bash -e
 
 cd /home/$HMRISO_USER/
-git clone http://download.luwrain.org/git/dwm.git
+git clone https://github.com/marigostra/dwm/
 mv dwm .dwm
 cd .dwm
-git branch msp origin/msp
-git checkout msp
+git branch homeros origin/homeros
+git checkout homeros
 make 
 EOF
 
