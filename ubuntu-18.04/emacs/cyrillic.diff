@@ -1,0 +1,33 @@
+diff -ur orig/dtk-speak.el new/dtk-speak.el
+--- orig/dtk-speak.el	2018-09-16 14:02:58.986020123 +0700
++++ new/dtk-speak.el	2018-09-16 14:06:30.910498957 +0700
+@@ -1884,7 +1884,7 @@
+           (when pronunciation-table
+             (tts-apply-pronunciations
+              pronunciation-table))
+-          (dtk-unicode-replace-chars mode)
++          ;;(dtk-unicode-replace-chars mode)
+           (dtk-handle-repeating-patterns mode)
+           (dtk-quote mode))
+         (goto-char (point-min))
+diff -ur orig/emacspeak-speak.el new/emacspeak-speak.el
+--- orig/emacspeak-speak.el	2018-09-16 14:02:58.986020123 +0700
++++ new/emacspeak-speak.el	2018-09-16 14:14:54.383878748 +0700
+@@ -762,7 +762,7 @@
+      "sEnterregular expression to match lines that are decorative ASCII: ")
+ 
+ (defcustom emacspeak-unspeakable-rule
+-  "^[^0-9a-zA-Z]+$"
++  "^\\W+$"
+   "*Pattern to match lines of special chars.
+ This is a regular expression that matches lines containing only
+ non-alphanumeric characters.  emacspeak will generate a tone
+@@ -1067,7 +1067,7 @@
+     (when char
+       (cond
+        ((stringp display) (dtk-speak display))
+-       ((> char 128) (emacspeak-speak-char-name char))
++       ;;((> char 128) (emacspeak-speak-char-name char))
+        ((and (not prefix)
+              (emacspeak-is-alpha-p char))
+         (dtk-speak (emacspeak-get-phonetic-string char )))
