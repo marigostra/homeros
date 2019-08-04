@@ -35,7 +35,8 @@ console-cyrillic	console-cyrillic/bootsetup	boolean	false
 console-cyrillic	console-cyrillic/fontsize	select	16
 EOF
 
-install-pkg voiceman rhvoice espeak yasr eflite
+#install-pkg voiceman rhvoice
+install-pkg espeak yasr eflite
 install-pkg emacspeak w3m w3m-el
 install-pkg pmount openssh-server fetchmail procmail smartmontools ntpdate
 install-pkg wpasupplicant acpi ntfs-3g dvd+rw-tools growisofs syslinux syslinux-legacy
