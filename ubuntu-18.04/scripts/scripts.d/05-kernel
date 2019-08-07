@@ -1,2 +1,5 @@
 
-chroot-run apt-get install --reinstall linux-image-$HMRISO_KERNEL
+
+KERNEL=$(ls "$LWRISO_ROOT/lib/modules")
+echo "Kernel version: $KERNEL"
+chroot-run apt-get install --reinstall linux-image-$KERNEL
