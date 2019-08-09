@@ -39,7 +39,7 @@ cat <<EOF > "$HMRISO_ROOT/etc/voiceman.d/mbrola-eng.output"
 name = mbrola
 type = command
 lang = eng
-synth command = "freephone -h /usr/share/freespeech/lexicon -m | mbrola -f %p -v %v -t %r /usr/share/mbrola/en1/en1 - - | /usr/bin/voiceman-trim --words "
+synth command = "freephone -h /usr/lib/mbrola-suite/lexicon -m | mbrola -f %p -v %v -t %r /usr/lib/mbrola-suite/en1 - - | /usr/bin/voiceman-trim --words "
 alsa player command = "exec aplay -t raw -f s16 -c 1 -r 16000"
 replacements = "/usr/share/voiceman/replacements.mbrola"
 pitch num digits after dot = 2

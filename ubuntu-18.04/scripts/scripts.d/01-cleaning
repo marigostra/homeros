@@ -1,6 +1,7 @@
 
+
 remove-pkg pulseaudio pulseaudio-utils
-remove-pkg libreoffice-common libreoffice-core thunderbird libunity9
+remove-pkg libreoffice-common libreoffice-core thunderbird
 remove-pkg libgtk-3-common libgtk2.0-common libqtcore4 libqt5core5a
 #remove-pkg ubuntu-touch-sounds ubuntu-sounds
 remove-pkg wbrazilian wfrench witalian wngerman wogerman wportuguese wspanish wswiss
@@ -10,8 +11,8 @@ remove-pkg hunspell-de-at hunspell-de-ch hunspell-de-de hunspell-en-ca hunspell-
 #remove-pkg libsane-common liborbit-2.0 a11y-profile-manager at-spi2-core
 #remove-pkg gconf-service gedit-common imagemagick-common
 remove-pkg gdb
-remove-pkg glib-networking-common gvfs-common
-remove-pkg transmission-common totem-common shotwell-common openprinting-ppds nautilus-data make
+#remove-pkg glib-networking-common gvfs-common
+#remove-pkg transmission-common totem-common shotwell-common openprinting-ppds nautilus-data make
 #remove-pkg ttf-ancient-fonts-symbola fonts-stix fonts-noto-cjk
 remove-pkg tegaki-zinnia-japanese app-install-data ubuntu-wallpapers-xenial
 
@@ -33,5 +34,7 @@ remove-pkg $(apt-cache search gir1 | grep ^gir1 | cut -f1 -d' ')
 remove-pkg $(apt-cache search libgnome | grep ^libgnome | cut -f1 -d' ')
 remove-pkg $(apt-cache search printer-driver | grep ^printer-driver | cut -f1 -d' ')
 remove-pkg $(apt-cache search mythes | grep ^mythes | cut -f1 -d' ')
+
+remove-pkg x11-common xserver-common
 
 chroot-run apt-get -y autoremove
