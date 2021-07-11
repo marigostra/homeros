@@ -1,0 +1,17 @@
+
+pushd $HMRISO_ROOT/usr/share/emacs/site-lisp/emacspeak/lisp
+for i in /iso/emacs/*; do
+    patch -p1 < "$i"
+done
+popd
+
+cat <<EOF > $HMRISO_ROOT/etc/emacspeak.conf
+# emacspeak configuration
+export DTK_PROGRAM=/usr/bin/voiceman-emacspeak
+export DTK_TCL=tcl
+export DTK_PORT=none
+export DTK_DEVICE="espeak"
+EOF
+
+rm -rf $HMRISO_ROOT/usr/share/emacs24/site-lisp/emacspeak/
+chroot-run /usr/lib/emacsen-common/packages/install/emacspeak  emacs24

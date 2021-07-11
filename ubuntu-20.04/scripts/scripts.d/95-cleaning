@@ -1,0 +1,2 @@
+
+rm -f ./chroot/home/$HMRISO_USER/examples.desktop
