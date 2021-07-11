@@ -1,4 +1,0 @@
-#!/bin/bash -e
-
-/usr/bin/mplayer -fs "$1" &> /dev/null
-exit $?

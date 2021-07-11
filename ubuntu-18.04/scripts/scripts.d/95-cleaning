@@ -1,9 +1,0 @@
-
-
-remove-pkg branding-ubuntu build-essential cups-common example-content git gvfs-libs
-remove-pkg fonts-dejavu-core fonts-droid-fallback fonts-freefont-ttf fonts-kacst fonts-kacst-one fonts-lklug-sinhala fonts-noto-color-emoji fonts-noto-mono fonts-pagul
-
-chroot-run apt-get -y autoremove
-chroot-run  apt-get clean
-
-rm -f "$HMRISO_ROOT/home/$HMRISO_USER/examples.desktop"

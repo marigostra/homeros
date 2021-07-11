@@ -1,3 +1,0 @@
-
-echo >> ./chroot/etc/ssh/sshd_config
-echo 'PubkeyAcceptedKeyTypes=+ssh-dss' >> ./chroot/etc/ssh/sshd_config
