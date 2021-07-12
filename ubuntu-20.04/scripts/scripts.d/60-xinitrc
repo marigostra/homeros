@@ -1,13 +1,13 @@
 
-#cat <<EOF > $LWRISO_ROOT/usr/local/bin/dwm-autolaunch
+#cat <<EOF > $HMRISO_ROOT/usr/local/bin/dwm-autolaunch
 ##!/bin/bash -e
 #
 #exec /usr/local/bin/luwrain --linux-input-pointer=/dev/input/mice
 #EOF
-#chmod 755 $LWRISO_ROOT/usr/local/bin/dwm-autolaunch
+#chmod 755 $HMRISO_ROOT/usr/local/bin/dwm-autolaunch
 
 #if [ "$LWRISO_LANG" == en ]; then
-#cat <<EOF > $LWRISO_ROOT/home/luwrain/.xinitrc
+#cat <<EOF > $HMRISO_ROOT/home/luwrain/.xinitrc
 ## Copyright 2019 Michael Pozhidaev <msp@luwrain.org>
 #
 #export LANG=en_US.UTF-8
@@ -17,7 +17,7 @@
 #fi
 
 #if [ "$LWRISO_LANG" == ro ]; then
-#cat <<EOF > $LWRISO_ROOT/home/luwrain/.xinitrc
+#cat <<EOF > $HMRISO_ROOT/home/luwrain/.xinitrc
 ## Copyright 2019 Michael Pozhidaev <msp@luwrain.org>
 #
 #export LANG=ro_RO.UTF-8
@@ -32,7 +32,7 @@
 #fi
 
 #if [ "$LWRISO_LANG" == ru ]; then
-cat <<EOF > $LWRISO_ROOT/home/luwrain/.xinitrc
+cat <<EOF > $HMRISO_ROOT/home/luwrain/.xinitrc
 # Copyright 2020 Michael Pozhidaev <msp@luwrain.org>
 
 export LANG=ru_RU.UTF-8

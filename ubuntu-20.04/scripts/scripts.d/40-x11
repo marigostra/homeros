@@ -3,7 +3,7 @@
 remove-pkg xserver-xorg-legacy
 install-pkg gcc
 
-cat <<EOF > "$LWRISO_ROOT/tmp/xwrapper.c"
+cat <<EOF > "$HMRISO_ROOT/tmp/xwrapper.c"
 
 #include<stdlib.h>
 #include<sys/types.h>
@@ -40,6 +40,6 @@ execv(COMMAND, a);
 EOF
 
 chroot-run gcc -o/usr/lib/xorg/Xorg.wrap /tmp/xwrapper.c
-chmod 4755 "$LWRISO_ROOT/usr/lib/xorg/Xorg.wrap"
+chmod 4755 "$HMRISO_ROOT/usr/lib/xorg/Xorg.wrap"
 
-rm -f "$LWRISO_ROOT/etc/X11/Xwrapper.config"
+rm -f "$HMRISO_ROOT/etc/X11/Xwrapper.config"

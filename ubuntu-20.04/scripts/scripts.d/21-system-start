@@ -1,6 +1,6 @@
 
-mkdir $LWRISO_ROOT/etc/luwrain
-cat <<EOF > $LWRISO_ROOT/etc/luwrain/system-start
+mkdir $HMRISO_ROOT/etc/luwrain
+cat <<EOF > $HMRISO_ROOT/etc/luwrain/system-start
 #!/bin/bash
 # Copyright 2021 Michael Pozhidaev <msp@luwrain.org>
 
@@ -23,4 +23,4 @@ while /bin/true; do
 done
 EOF
 
-chmod 755 $LWRISO_ROOT/etc/luwrain/system-start
+chmod 755 $HMRISO_ROOT/etc/luwrain/system-start

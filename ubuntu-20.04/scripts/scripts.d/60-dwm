@@ -2,7 +2,7 @@
 install-pkg gcc git make
 install-pkg libx11-dev libxft-dev libxinerama-dev
 
-cat <<EOF > $LWRISO_ROOT/home/$LWRISO_USER/build-dwm
+cat <<EOF > $HMRISO_ROOT/home/$LWRISO_USER/build-dwm
 #!/bin/bash -e
 
 cd /home/$LWRISO_USER/
@@ -13,9 +13,9 @@ git checkout homeros
 make 
 EOF
 
-chmod 755 $LWRISO_ROOT/home/$LWRISO_USER/build-dwm
+chmod 755 $HMRISO_ROOT/home/$LWRISO_USER/build-dwm
 chroot-run  /home/$LWRISO_USER/build-dwm
-cp $LWRISO_ROOT/home/$LWRISO_USER/dwm/dwm "$LWRISO_ROOT/usr/local/bin/luwrain-dwm"
-rm -rf $LWRISO_ROOT/home/$LWRISO_USER/build-dwm $LWRISO_ROOT/home/$LWRISO_USER/dwm
+cp $HMRISO_ROOT/home/$LWRISO_USER/dwm/dwm "$LWRISO_ROOT/usr/local/bin/luwrain-dwm"
+rm -rf $HMRISO_ROOT/home/$LWRISO_USER/build-dwm $LWRISO_ROOT/home/$LWRISO_USER/dwm
 
-chown -R 1000:1000 $LWRISO_ROOT/home/$LWRISO_USER/
+chown -R 1000:1000 $HMRISO_ROOT/home/$LWRISO_USER/
