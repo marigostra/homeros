@@ -17,11 +17,11 @@ unsquashfs -d "$CHROOT" "$SQUASHFSSRC" > /dev/null
 cp -r dist emacs scripts/. "$WORK/iso"
 
 mount --bind /proc "$CHROOT/proc"
-chroot "$WORK" /iso/homeros-prepare-chroot
+chroot "$WORK" /iso/image-prepare
 umount "$CHROOT/proc"
 
 rm -f "$WORK/iso/disk/casper/filesystem.squashfs"
-chroot "$WORK" /iso/homeros-build-iso
+chroot "$WORK" /iso/image-pack
 cp "$WORK/iso/homeros.iso" homeros.iso
 
 echo 'OK!'

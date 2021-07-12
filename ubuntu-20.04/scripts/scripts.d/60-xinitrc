@@ -6,7 +6,7 @@
 #EOF
 #chmod 755 $HMRISO_ROOT/usr/local/bin/dwm-autolaunch
 
-#if [ "$LWRISO_LANG" == en ]; then
+#if [ "$HMRISO_LANG" == en ]; then
 #cat <<EOF > $HMRISO_ROOT/home/luwrain/.xinitrc
 ## Copyright 2019 Michael Pozhidaev <msp@luwrain.org>
 #
@@ -16,22 +16,7 @@
 #EOF
 #fi
 
-#if [ "$LWRISO_LANG" == ro ]; then
-#cat <<EOF > $HMRISO_ROOT/home/luwrain/.xinitrc
-## Copyright 2019 Michael Pozhidaev <msp@luwrain.org>
-#
-#export LANG=ro_RO.UTF-8
-##export LANG=en_US.UTF-8
-#export LUWRAIN_LANG=ro
-#
-#setxkbmap -layout "us,ro"
-#setxkbmap -option "grp:alt_shift_toggle,grp_led:scroll"
-#
-#exec /usr/local/bin/dwm
-#EOF
-#fi
-
-#if [ "$LWRISO_LANG" == ru ]; then
+#if [ "$HMRISO_LANG" == ru ]; then
 cat <<EOF > $HMRISO_ROOT/home/luwrain/.xinitrc
 # Copyright 2020 Michael Pozhidaev <msp@luwrain.org>
 
