@@ -1,0 +1,4 @@
+
+remove-pkg gcc-9 gdb make git
+chroot-run apt-get -y autoremove
+chroot-run  apt-get clean

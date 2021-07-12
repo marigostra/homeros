@@ -1,8 +1,9 @@
 #!/bin/bash -e
 
-remove-pkg xserver-xorg-legacy-hwe-16.04
+remove-pkg xserver-xorg-legacy
+install-pkg gcc
 
-cat <<EOF > "$HMRISO_ROOT/tmp/xwrapper.c"
+cat <<EOF > "$LWRISO_ROOT/tmp/xwrapper.c"
 
 #include<stdlib.h>
 #include<sys/types.h>
@@ -39,12 +40,6 @@ execv(COMMAND, a);
 EOF
 
 chroot-run gcc -o/usr/lib/xorg/Xorg.wrap /tmp/xwrapper.c
-chmod 4755 "$HMRISO_ROOT/usr/lib/xorg/Xorg.wrap"
+chmod 4755 "$LWRISO_ROOT/usr/lib/xorg/Xorg.wrap"
 
-rm -f "$HMRISO_ROOT/etc/X11/Xwrapper.config"
-
-#echo 'allowed_users=anybody' > ./chroot/etc/X11/Xwrapper.config
-#sed -i -e s/'^allowed_users=.*$'/'allowed_users=anybody'/ "$HMRISO_ROOT/etc/X11/Xwrapper.config"
-# Dirty hack, but it's unclear how to bypass that
-# Ubuntu 16.04 no longer using Xorg.wrap, so we get all the errors related to 'permission denies' as Xorg launches with restricted rights
-#chmod 4755 ./chroot/usr/lib/xorg/Xorg
+rm -f "$LWRISO_ROOT/etc/X11/Xwrapper.config"

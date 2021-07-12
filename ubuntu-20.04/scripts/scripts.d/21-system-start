@@ -1,0 +1,26 @@
+
+mkdir $LWRISO_ROOT/etc/luwrain
+cat <<EOF > $LWRISO_ROOT/etc/luwrain/system-start
+#!/bin/bash
+# Copyright 2021 Michael Pozhidaev <msp@luwrain.org>
+
+for i in Master PCM Speaker; do
+    /usr/bin/amixer set  \$i 100% unmute
+done &> /dev/null
+
+#killall brltty
+#/sbin/brltty -t ru
+
+#export VOICEMAN_LIBAO_DRIVER=alsa
+#if ! [ -e /tmp/voiceman.socket ]; then
+#    /usr/bin/voicemand -d
+#fi
+
+chmod 777 /dev/input/mice
+/bin/su - luwrain -c /opt/greeter/greeter
+/bin/su - luwrain -c /usr/bin/startx
+while /bin/true; do
+done
+EOF
+
+chmod 755 $LWRISO_ROOT/etc/luwrain/system-start

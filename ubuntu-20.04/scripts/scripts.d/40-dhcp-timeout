@@ -1,2 +1,3 @@
 
-sed -i -e s/'TimeoutStartSec=5min'/'TimeoutStartSec=15'/ "$HMRISO_ROOT/lib/systemd/system/networking.service"
+# Not working on 20.04
+#sed -i -e s/'TimeoutStartSec=5min'/'TimeoutStartSec=15'/ "$LWRISO_ROOT/lib/systemd/system/networking.service"

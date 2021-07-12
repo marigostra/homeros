@@ -1,0 +1,45 @@
+
+#cat <<EOF > $LWRISO_ROOT/usr/local/bin/dwm-autolaunch
+##!/bin/bash -e
+#
+#exec /usr/local/bin/luwrain --linux-input-pointer=/dev/input/mice
+#EOF
+#chmod 755 $LWRISO_ROOT/usr/local/bin/dwm-autolaunch
+
+#if [ "$LWRISO_LANG" == en ]; then
+#cat <<EOF > $LWRISO_ROOT/home/luwrain/.xinitrc
+## Copyright 2019 Michael Pozhidaev <msp@luwrain.org>
+#
+#export LANG=en_US.UTF-8
+#
+#exec /usr/local/bin/dwm
+#EOF
+#fi
+
+#if [ "$LWRISO_LANG" == ro ]; then
+#cat <<EOF > $LWRISO_ROOT/home/luwrain/.xinitrc
+## Copyright 2019 Michael Pozhidaev <msp@luwrain.org>
+#
+#export LANG=ro_RO.UTF-8
+##export LANG=en_US.UTF-8
+#export LUWRAIN_LANG=ro
+#
+#setxkbmap -layout "us,ro"
+#setxkbmap -option "grp:alt_shift_toggle,grp_led:scroll"
+#
+#exec /usr/local/bin/dwm
+#EOF
+#fi
+
+#if [ "$LWRISO_LANG" == ru ]; then
+cat <<EOF > $LWRISO_ROOT/home/luwrain/.xinitrc
+# Copyright 2020 Michael Pozhidaev <msp@luwrain.org>
+
+export LANG=ru_RU.UTF-8
+
+setxkbmap -layout "us,ru"
+setxkbmap -option "grp:alt_shift_toggle,grp_led:scroll"
+
+exec /usr/local/bin/luwrain-dwm
+EOF
+#fi

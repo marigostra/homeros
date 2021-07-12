@@ -1,0 +1,21 @@
+
+install-pkg gcc git make
+install-pkg libx11-dev libxft-dev libxinerama-dev
+
+cat <<EOF > $LWRISO_ROOT/home/$LWRISO_USER/build-dwm
+#!/bin/bash -e
+
+cd /home/$LWRISO_USER/
+git clone https://github.com/marigostra/dwm/
+cd dwm
+git branch homeros origin/homeros
+git checkout homeros
+make 
+EOF
+
+chmod 755 $LWRISO_ROOT/home/$LWRISO_USER/build-dwm
+chroot-run  /home/$LWRISO_USER/build-dwm
+cp $LWRISO_ROOT/home/$LWRISO_USER/dwm/dwm "$LWRISO_ROOT/usr/local/bin/luwrain-dwm"
+rm -rf $LWRISO_ROOT/home/$LWRISO_USER/build-dwm $LWRISO_ROOT/home/$LWRISO_USER/dwm
+
+chown -R 1000:1000 $LWRISO_ROOT/home/$LWRISO_USER/
