@@ -1,8 +1,0 @@
-
-chroot-run useradd -G cdrom,audio,video,users,tty luwrain
-chroot-run cp -r /etc/skel /home/luwrain
-[ -d ./dist/profile ] && cp -r ./dist/profile/. $HMRISO_ROOT/home/luwrain/
-chroot-run chown -R luwrain:luwrain /home/luwrain
-echo 'luwrain ALL=NOPASSWD:ALL' > "$HMRISO_ROOT/etc/sudoers.d/luwrain"
-chmod 400 "$HMRISO_ROOT/etc/sudoers.d/luwrain"
-rm -f "$HMRISO_ROOT/home/luwrain/examples.desktop"

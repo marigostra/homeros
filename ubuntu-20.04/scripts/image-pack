@@ -1,18 +1,17 @@
 #!/bin/bash -e
 
 cd /iso
-. config.sh
+. base.sh
 
 cat <<EOF > /etc/apt/sources.list
-deb http://download.luwrain.org/ubuntu/ xenial main
-deb http://security.ubuntu.com/ubuntu/ xenial-security main restricted universe multiverse
-deb http://ru.archive.ubuntu.com/ubuntu/ xenial-updates main restricted universe multiverse
-deb http://ru.archive.ubuntu.com/ubuntu/ xenial main restricted universe multiverse
+deb http://security.ubuntu.com/ubuntu/ focal-security main restricted universe multiverse
+deb http://ru.archive.ubuntu.com/ubuntu/ focal-updates main restricted universe multiverse
+deb http://ru.archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse
 EOF
 
-echo "nameserver $HMRISO_NAMESERVER" > /run/resolvconf/resolv.conf
+echo "nameserver $HMRISO_NAMESERVER" > "/etc/resolv.conf"
 apt-get update
-apt-get -y --force-yes install syslinux syslinux-common syslinux-utils squashfs-tools genisoimage
+apt-get --yes install syslinux syslinux-common syslinux-utils squashfs-tools genisoimage
 
 mksquashfs chroot disk/casper/filesystem.squashfs -comp xz > /dev/null
 

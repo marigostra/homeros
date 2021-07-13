@@ -1,4 +1,21 @@
 
+
+cat <<EOF | chroot-run debconf-set-selections
+emacspeak	shared/emacspeak/database	select	
+emacspeak	shared/emacspeak/program	string	dtk-mv
+emacspeak	shared/emacspeak/fake	select	
+emacspeak	shared/emacspeak/rootgroup	error	
+emacspeak	shared/emacspeak/device	select	DECtalk 3
+emacspeak	shared/emacspeak/invaliduser	error	
+emacspeak	shared/emacspeak/port	string	none
+emacspeak	shared/emacspeak/tcl	string	tcl
+emacspeak	shared/emacspeak/groupies	string	
+emacspeak	shared/emacspeak/invalidport	error	
+EOF
+
+install-pkg emacspeak
+#w3m w3m-el
+
 pushd $HMRISO_ROOT/usr/share/emacs/site-lisp/emacspeak/lisp
 for i in /iso/emacs/*; do
     patch -p1 < "$i"
@@ -13,5 +30,5 @@ export DTK_PORT=none
 export DTK_DEVICE="espeak"
 EOF
 
-rm -rf $HMRISO_ROOT/usr/share/emacs24/site-lisp/emacspeak/
-chroot-run /usr/lib/emacsen-common/packages/install/emacspeak  emacs24
+#rm -rf $HMRISO_ROOT/usr/share/emacs24/site-lisp/emacspeak/
+#chroot-run /usr/lib/emacsen-common/packages/install/emacspeak  emacs64

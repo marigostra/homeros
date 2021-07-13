@@ -3,6 +3,8 @@
 cd /iso
 . base.sh
 
+export DEBIAN_FRONTEND=noninteractive
+
 #in-chroot apt-get -y remove pulseaudio pulseaudio-utils \
 #ubiquity \
 #libreoffice-core firefox thunderbird libunity9 \
