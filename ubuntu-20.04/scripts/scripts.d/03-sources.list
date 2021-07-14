@@ -1,10 +1,12 @@
 
 cat <<EOF > ./chroot/etc/apt/sources.list
+deb https://download.luwrain.org/repo/ luwrain focal
 deb http://security.ubuntu.com/ubuntu/ focal-security main restricted universe multiverse
 deb http://ru.archive.ubuntu.com/ubuntu/ focal-updates main restricted universe multiverse
 deb http://ru.archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse
 EOF
 
+#curl isn't available at this point yet
 cat <<EOF | chroot-run apt-key add -
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 Version: GnuPG v1
