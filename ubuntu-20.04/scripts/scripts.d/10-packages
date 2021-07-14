@@ -1,6 +1,6 @@
 
 install-pkg acpi ntfs-3g wpasupplicant pm-utils smartmontools 
 install-pkg dvd+rw-tools growisofs
-#install-pkg voiceman espeak yasr libttspico-utils libttspico-data
+install-pkg yasr
 install-pkg lame sox mpg123 mplayer xbindkeys vorbis-tools
 install-pkg language-pack-en language-pack-en-base

@@ -1,6 +1,6 @@
 
-mkdir $HMRISO_ROOT/etc/luwrain
-cat <<EOF > $HMRISO_ROOT/etc/luwrain/system-start
+mkdir $HMRISO_ROOT/etc/homeros
+cat <<EOF > $HMRISO_ROOT/etc/homeros/system-start
 #!/bin/bash
 # Copyright 2021 Michael Pozhidaev <msp@luwrain.org>
 
@@ -17,10 +17,7 @@ done &> /dev/null
 #fi
 
 chmod 777 /dev/input/mice
-/bin/su - luwrain -c /opt/greeter/greeter
-/bin/su - luwrain -c /usr/bin/startx
-while /bin/true; do
-done
+/bin/su - $HMRISO_USER -c /usr/bin/startx
 EOF
 
-chmod 755 $HMRISO_ROOT/etc/luwrain/system-start
+chmod 755 $HMRISO_ROOT/etc/homeros/system-start
