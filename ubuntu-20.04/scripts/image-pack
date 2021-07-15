@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash -evx
 
 cd /iso
 . base.sh
@@ -18,7 +18,7 @@ mksquashfs chroot disk/casper/filesystem.squashfs -comp xz > /dev/null
 rm -rf disk/casper/filesystem.squashfs.gpg disk/md5sum.txt disk/pool disk/ubuntu 
 echo "Homeros - Release $HMRISO_ARCH ($HMRISO_DATE)" > disk/.disk/info
 echo 'http://marigostra.ru/projects/homeros/' > disk/.disk/release_notes_url
-sed -i -e s/'Ubuntu.*$'/'Homeros '$HMRISO_DATE' - Release '$HMRISO_ARCH/ disk/README.diskdefines
+#sed -i -e s/'Ubuntu.*$'/'Homeros '$HMRISO_DATE' - Release '$HMRISO_ARCH/ disk/README.diskdefines
 
 cat <<EOF > disk/README.ru.txt
 
