@@ -30,5 +30,5 @@ export DTK_PORT=none
 export DTK_DEVICE="espeak"
 EOF
 
-#rm -rf $HMRISO_ROOT/usr/share/emacs24/site-lisp/emacspeak/
-#chroot-run /usr/lib/emacsen-common/packages/install/emacspeak  emacs64
+rm -rf $HMRISO_ROOT/usr/share/emacs/site-lisp/emacspeak/lisp/*.elc $HMRISO_ROOT/usr/share/emacs/site-lisp/emacspeak/debian_compiled_version
+chroot-run /usr/lib/emacsen-common/packages/install/emacspeak  emacs
