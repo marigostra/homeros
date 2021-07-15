@@ -9,10 +9,10 @@ cat <<EOF > $HMRISO_ROOT/etc/voiceman.conf
 inet socket port = 5511
 socket = "/tmp/voiceman.socket"
 log level = info
-default language = rus
+default language = eng
 
 [characters]
-rus = "0123456789.,;:_-+=[]&<>""'/\\|?~\`!@#\$%^*(){}"
+default = "0123456789.,;:_-+=[]&<>""'/\\|?~\`!@#\$%^*(){}"
 EOF
 
 cat <<EOF > $HMRISO_ROOT/etc/voiceman.d/rhvoice.output

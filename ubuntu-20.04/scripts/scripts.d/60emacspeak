@@ -14,7 +14,7 @@ emacspeak	shared/emacspeak/invalidport	error
 EOF
 
 install-pkg emacspeak
-#w3m w3m-el
+install-pkg w3m-el
 
 pushd $HMRISO_ROOT/usr/share/emacs/site-lisp/emacspeak/lisp
 for i in /iso/emacs/*; do
