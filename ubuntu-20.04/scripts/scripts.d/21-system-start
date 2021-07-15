@@ -11,12 +11,12 @@ done &> /dev/null
 #killall brltty
 #/sbin/brltty -t ru
 
+ogg123 -d alsa /opt/homeros.ogg
 #export VOICEMAN_LIBAO_DRIVER=alsa
-#if ! [ -e /tmp/voiceman.socket ]; then
-#    /usr/bin/voicemand -d
-#fi
+if ! [ -e /tmp/voiceman.socket ]; then
+    /usr/bin/voicemand -d
+fi
 
-chmod 777 /dev/input/mice
 /bin/su - $HMRISO_USER -c /usr/bin/startx
 EOF
 

@@ -1,5 +1,5 @@
 
-install-pkg voiceman rhvoice
+install-pkg voiceman mbrola-suite rhvoice
 
 cat <<EOF > $HMRISO_ROOT/etc/voiceman.conf
 # VoiceMan configuration for Homeros
@@ -15,10 +15,10 @@ default language = rus
 rus = "0123456789.,;:_-+=[]&<>""'/\\|?~\`!@#\$%^*(){}"
 EOF
 
-cat <<EOF > $HMRISO_ROOT/etc/voiceman.d/rhvoice-rus.output
+cat <<EOF > $HMRISO_ROOT/etc/voiceman.d/rhvoice.output
 
 [output]
-name = RHVoice-rus
+name = RHVoice
 type = command
 lang = rus
 synth command = "RHVoice -r %r -p %p | voiceman-trim --words"
@@ -33,27 +33,27 @@ rate aver = 1.6
 rate min = 2
 EOF
 
-cat <<EOF > $HMRISO_ROOT/etc/voiceman.d/espeak-eng.output
+cat <<EOF > $HMRISO_ROOT/etc/voiceman.d/mbrola.output
 
 [output]
-name = espeak
+name = mbrola
 type = command
 lang = eng
-synth command = "espeak --stdout -p %p -s %r -a %v | voiceman-trim --words"
-alsa player command = "exec aplay -t raw -f s8 -c 1 -r 22500"
-pitch num digits after dot = 0
-pitch min = 1
-pitch aver = 30
-pitch max = 199
-rate num digits after dot = 0
-rate min = 200
-rate aver = 160
-rate max = 1
-volume num digits after dot = 0
+synth command = "freephone -h /usr/lib/mbrola-suite/lexicon -m | mbrola -f %p -v %v -t %r /usr/lib/mbrola-suite/en1 - - | /usr/bin/voiceman-trim --words "
+alsa player command = "exec aplay -t raw -f s16 -c 1 -r 16000"
+replacements = "/usr/share/voiceman/replacements.mbrola"
+pitch num digits after dot = 2
+pitch min = 0.3
+pitch aver = 1
+pitch max = 2.5
+rate num digits after dot = 2
+rate min = 0.5
+rate aver = 1
+rate max = 3
+volume num digits after dot = 2
 volume min = 0
-volume aver = 100
-volume max = 150
-cap list = "a eigh b bee c see d dee e ee f ef g gee h eighch i ei j jay k kay l el m em n en o oh p pee q quu r ar s es t tee u ou v vee w doubloo x ecs y why z zet"
+volume aver = 2.5
+volume max = 10
 EOF
 
 cat <<EOF > $HMRISO_ROOT/usr/share/voiceman/chars-table
