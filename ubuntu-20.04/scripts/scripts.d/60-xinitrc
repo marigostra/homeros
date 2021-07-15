@@ -2,6 +2,7 @@
 cat <<EOF > $HMRISO_ROOT/usr/local/bin/dwm-autolaunch
 #!/bin/bash -e
 
+export VOICEMAN_EMACSPEAK_RATE_FRACTION=2
 exec emacspeak
 EOF
 chmod 755 $HMRISO_ROOT/usr/local/bin/dwm-autolaunch
@@ -11,7 +12,6 @@ cat <<EOF > $HMRISO_ROOT/home/$HMRISO_ROOT/.xinitrc
 # Copyright 2021 Michael Pozhidaev <msp@luwrain.org>
 
 export LANG=en_US.UTF-8
-export VOICEMAN_EMACSPEAK_RATE_FRACTION=2
 
 exec ~/.dwm/dwm
 EOF
@@ -22,10 +22,9 @@ cat <<EOF > $HMRISO_ROOT/home/$HMRISO_USER/.xinitrc
 # Copyright 2021 Michael Pozhidaev <msp@luwrain.org>
 
 export LANG=ru_RU.UTF-8
-export VOICEMAN_EMACSPEAK_RATE_FRACTION=2
 
 setxkbmap -layout "us,ru"
-setxkbmap -option "grp:alt_shift_toggle,grp_led:scroll"
+setxkbmap -option "grp:caps_toggle,grp_led:scroll"
 
 exec ~/.dwm/dwm
 EOF

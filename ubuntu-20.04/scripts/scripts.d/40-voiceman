@@ -56,7 +56,7 @@ volume aver = 2.5
 volume max = 10
 EOF
 
-cat <<EOF > $HMRISO_ROOT/usr/share/voiceman/chars-table
+cat <<EOF > $HMRISO_ROOT/usr/share/voiceman/chars-table.rus
 0:ноль
 1:один
 2:два

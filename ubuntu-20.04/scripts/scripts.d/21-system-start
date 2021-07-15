@@ -12,7 +12,7 @@ done &> /dev/null
 #/sbin/brltty -t ru
 
 ogg123 -d alsa /opt/homeros.ogg
-#export VOICEMAN_LIBAO_DRIVER=alsa
+export VOICEMAN_LIBAO_DRIVER=alsa
 if ! [ -e /tmp/voiceman.socket ]; then
     /usr/bin/voicemand -d
 fi
