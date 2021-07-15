@@ -1,3 +1,4 @@
 
 alias s='sudo systemctl'
-alias d='sudo udisksctl'
+alias d='udisksctl'
+alias n='sudo nmcli'

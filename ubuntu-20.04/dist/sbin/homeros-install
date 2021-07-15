@@ -71,7 +71,7 @@ rm -f $LOG
 echo Formatting the root filesystem "($TARGET_ROOT_DEV)"
 mkfs.ext4 "$TARGET_ROOT_DEV"  &>> $LOG
 mount $TARGET_ROOT_DEV $TARGET_MOUNT &>> $LOG
-echo The root filesystem is ready and monted
+echo The root filesystem is ready and mounted
 
 mount $SQUASH_SRC $SQUASH_MOUNT &>> $LOG
 echo Squashfs image is ready
