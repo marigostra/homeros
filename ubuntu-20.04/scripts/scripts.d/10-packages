@@ -1,7 +1,8 @@
 
 install-pkg acpi ntfs-3g smartmontools
-install-tools net-tools openssh-server fetchmail procmail
+install-pkg net-tools openssh-server fetchmail procmail
 #install-pkg dvd+rw-tools growisofs
 install-pkg yasr
-install-pkg lame sox mpg123 mplayer xbindkeys vorbis-tools
+install-pkg lame sox mpg123 mplayer xbindkeys vorbis-tools geeqie
 install-pkg language-pack-en language-pack-en-base
+install-pkg texlive-latex-recommended texlive-latex-extra texlive-metapost texlive-lang-cyrillic texlive-fonts-recommended cm-super lilypond
