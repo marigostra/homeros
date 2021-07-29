@@ -1,5 +1,5 @@
 
-install-pkg voiceman mbrola-suite rhvoice
+install-pkg voiceman mbrola-suite rhvoice-legacy
 
 cat <<EOF > $HMRISO_ROOT/etc/voiceman.conf
 # VoiceMan configuration for Homeros
@@ -21,7 +21,7 @@ cat <<EOF > $HMRISO_ROOT/etc/voiceman.d/rhvoice.output
 name = RHVoice
 type = command
 lang = rus
-synth command = "RHVoice -r %r -p %p | voiceman-trim --words"
+synth command = "rhvoice-legacy -r %r -p %p | voiceman-trim --words"
 alsa player command = "exec aplay -"
 pitch num digits after dot = 2
 pitch min = "0.1"
