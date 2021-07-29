@@ -3,13 +3,14 @@
 
 Homeros is a GNU/Linux distribution for the blind
 built on [Emacspeak](http://emacspeak.sourceforge.net/) and Ubuntu Linux 20.04.2.
-It includes Russian text-to-speech utilities and various settings for using by Russian-speaking people.
-The ISO images of Homeros please find at [download.luwrain.org/homeros/](https://download.luwrain.org/homeros/).
+It includes Russian text-to-speech utilities and various settings for use by Russian-speaking people.
+The prepared ISO images of Homeros please find at [download.luwrain.org/homeros](https://download.luwrain.org/homeros/).
+
 This repository contains all necessary scripts which everybody can use to make his/her own build for personal purposes with any  custom changes.
 
 ## INstallation
 
-The ISO images include the ```homeros-install``` script
+The ISO image includes the ```homeros-install``` script
 to clone the system to your hard drive.
 This script must be invoked as follows:
 
@@ -31,8 +32,8 @@ To run the building process please run:
 sudo ./homeros-iso /mnt/ubuntu
 ```
 
-Where ```/mnt/ubuntu/``` is a directory with the mounted Ubuntu Linux distribution.
-Since the ```homeros-iso``` script  uses its custom chroot environment,
+There ```/mnt/ubuntu/``` is a directory with the mounted Ubuntu Linux distribution.
+Since the ```homeros-iso``` script  uses its own chroot environment,
 the only tool you need installed in your system is ```unsquashfs```.
 
 The script installs the following component into the system for speech processing:
