@@ -70,6 +70,8 @@ rm -f $LOG
 
 echo Formatting the root filesystem "($TARGET_ROOT_DEV)"
 mkfs.ext4 "$TARGET_ROOT_DEV"  &>> $LOG
+tune2fs -c 0 "$TARGET_ROOT_DEV"  &>> $LOG
+tune2fs -i 0 "$TARGET_ROOT_DEV"  &>> $LOG
 mount $TARGET_ROOT_DEV $TARGET_MOUNT &>> $LOG
 echo The root filesystem is ready and mounted
 
