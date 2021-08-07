@@ -4,14 +4,14 @@ cat <<EOF > $HMRISO_ROOT/etc/homeros/system-start
 #!/bin/bash
 # Copyright 2021 Michael Pozhidaev <msp@luwrain.org>
 
-for i in Master PCM Speaker; do
+for i in PCM Speaker; do
     /usr/bin/amixer set  \$i 100% unmute
 done &> /dev/null
+/usr/bin/amixer set Master 100% unmute
 
 #killall brltty
 #/sbin/brltty -t ru
 
-ogg123 -d alsa /opt/homeros.ogg
 export VOICEMAN_LIBAO_DRIVER=alsa
 if ! [ -e /tmp/voiceman.socket ]; then
     /usr/bin/voicemand -d

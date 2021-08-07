@@ -1,7 +1,6 @@
 #!/bin/bash -e
 
 remove-pkg xserver-xorg-legacy
-install-pkg gcc
 
 cat <<EOF > "$HMRISO_ROOT/tmp/xwrapper.c"
 
