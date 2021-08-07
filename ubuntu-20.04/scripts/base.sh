@@ -1,6 +1,4 @@
 
-
-
 HMRISO_ARCH=amd64
 HMRISO_DATE="$(date +%Y%m%d)"
 HMRISO_USER=homeros

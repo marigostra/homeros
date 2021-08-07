@@ -23,6 +23,9 @@
 
 (setq make-backup-files nil)
 
+;;Open shell in the current window
+(push (cons "\\*shell\\*" display-buffer--same-window-action) display-buffer-alist)
+
 (setq inhibit-startup-screen t)
 (setq line-move-visual nil)
 (setq emacspeak-gnus-punctuation-mode 'all)

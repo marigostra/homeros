@@ -4,7 +4,7 @@ THIS="${0##*/}"
 
 [ -z "$1" ] && echo "$THIS:no Ubuntu image given" >&2 && exit 1
 
-WORK="./tmp-env"
+WORK="./tmp-env/image"
 CHROOT="$WORK/iso/chroot"
 DISK="$1"
 SQUASHFSSRC="$1/casper/filesystem.squashfs"
