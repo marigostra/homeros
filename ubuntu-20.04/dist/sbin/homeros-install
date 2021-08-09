@@ -99,6 +99,7 @@ echo '127.0.0.1 localhost.localdomain localhost' >> $TARGET_MOUNT/etc/hosts
 
 mkdir -p $TARGET_MOUNT/etc/homeros
 cat /etc/homeros/system-start > $TARGET_MOUNT/etc/homeros/system-start
+sed -i -e s/'Master 100'/'Master 80'/ $TARGET_MOUNT/etc/homeros/system-start
 chmod 755 $TARGET_MOUNT/etc/homeros/system-start
 
 #if [[ ! -z $TARGET_SWAP_DEV ]]; then
