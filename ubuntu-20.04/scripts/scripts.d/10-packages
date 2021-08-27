@@ -1,7 +1,7 @@
 
 install-pkg acpi ntfs-3g smartmontools
 install-pkg net-tools openssh-server fetchmail procmail  unattended-upgrades udisks2
-#install-pkg dvd+rw-tools growisofs
+install-pkg dvd+rw-tools growisofs
 install-pkg gcc gdb make git
 install-pkg yasr xterm
 install-pkg lame sox mpg123 mplayer xbindkeys vorbis-tools
