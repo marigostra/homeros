@@ -1,4 +1,3 @@
 
-remove-pkg libcups2
 chroot-run apt-get -y autoremove
 chroot-run  apt-get clean

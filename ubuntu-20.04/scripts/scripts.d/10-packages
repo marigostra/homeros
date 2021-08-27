@@ -4,6 +4,6 @@ install-pkg net-tools openssh-server fetchmail procmail  unattended-upgrades udi
 #install-pkg dvd+rw-tools growisofs
 install-pkg gcc gdb make git
 install-pkg yasr xterm
-install-pkg lame sox mpg123 mplayer xbindkeys vorbis-tools geeqie
+install-pkg lame sox mpg123 mplayer xbindkeys vorbis-tools
 install-pkg language-pack-en language-pack-en-base
 install-pkg texlive-latex-recommended texlive-latex-extra texlive-metapost texlive-lang-cyrillic texlive-fonts-recommended cm-super lilypond
