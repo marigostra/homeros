@@ -1,0 +1,8 @@
+#!/bin/bash -e
+
+cat <<EOF > /etc/X11/xorg.conf
+Section "Device"
+    Identifier "noscreendevice"
+    Driver     "dummy"
+EndSection
+EOF
