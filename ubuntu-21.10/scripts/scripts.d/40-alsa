@@ -1,0 +1,4 @@
+
+# Unclear is it really needed
+#sed -i -e s/'80%'/'100%'/ $HMRISO_ROOT/usr/share/alsa/utils.sh
+rm -f $HMRISO_ROOT/lib/udev/rules.d/90-alsa-restore.rules

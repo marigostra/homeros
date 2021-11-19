@@ -1,0 +1,34 @@
+
+
+cat <<EOF | chroot-run debconf-set-selections
+emacspeak	shared/emacspeak/database	select	
+emacspeak	shared/emacspeak/program	string	dtk-mv
+emacspeak	shared/emacspeak/fake	select	
+emacspeak	shared/emacspeak/rootgroup	error	
+emacspeak	shared/emacspeak/device	select	DECtalk 3
+emacspeak	shared/emacspeak/invaliduser	error	
+emacspeak	shared/emacspeak/port	string	none
+emacspeak	shared/emacspeak/tcl	string	tcl
+emacspeak	shared/emacspeak/groupies	string	
+emacspeak	shared/emacspeak/invalidport	error	
+EOF
+
+install-pkg emacspeak
+install-pkg w3m-el
+
+pushd $HMRISO_ROOT/usr/share/emacs/site-lisp/emacspeak/lisp
+for i in /iso/emacs/*; do
+    patch -p1 < "$i"
+done
+popd
+
+cat <<EOF > $HMRISO_ROOT/etc/emacspeak.conf
+# emacspeak configuration
+export DTK_PROGRAM=/usr/bin/voiceman-emacspeak
+export DTK_TCL=tcl
+export DTK_PORT=none
+export DTK_DEVICE="espeak"
+EOF
+
+rm -rf $HMRISO_ROOT/usr/share/emacs/site-lisp/emacspeak/lisp/*.elc $HMRISO_ROOT/usr/share/emacs/site-lisp/emacspeak/debian_compiled_version
+chroot-run /usr/lib/emacsen-common/packages/install/emacspeak  emacs

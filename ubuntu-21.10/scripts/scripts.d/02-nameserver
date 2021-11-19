@@ -1,0 +1,3 @@
+
+
+echo "nameserver $HMRISO_NAMESERVER" > "$HMRISO_ROOT/etc/resolv.conf"
