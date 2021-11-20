@@ -1,6 +1,5 @@
 
 
-remove-pkg pulseaudio
 remove-pkg libreoffice-core libreoffice-common
 remove-pkg thunderbird firefox
 remove-pkg-prefix firefox-locale
