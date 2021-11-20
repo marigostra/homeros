@@ -1,9 +1,9 @@
 
 cat <<EOF > ./chroot/etc/apt/sources.list
-deb https://download.luwrain.org/repo/ luwrain focal
-deb http://security.ubuntu.com/ubuntu/ focal-security main restricted universe multiverse
-deb http://ru.archive.ubuntu.com/ubuntu/ focal-updates main restricted universe multiverse
-deb http://ru.archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse
+deb https://download.luwrain.org/repo/ luwrain impish
+deb http://security.ubuntu.com/ubuntu/ impish-security main restricted universe multiverse
+deb http://ru.archive.ubuntu.com/ubuntu/ impish-updates main restricted universe multiverse
+deb http://ru.archive.ubuntu.com/ubuntu/ impish main restricted universe multiverse
 EOF
 
 #curl isn't available at this point yet
@@ -150,7 +150,5 @@ cvLQQkax4VkYLK4eg1kYs/htbgG6q7G2
 =ZUHX
 -----END PGP PUBLIC KEY BLOCK-----
 EOF
-
-
 
 chroot-run apt-get update

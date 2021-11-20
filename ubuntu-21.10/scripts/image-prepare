@@ -20,6 +20,7 @@ export HOME=/home/$HMRISO_USER
 #sed -i -e s:'^ExecStart=.*$':'ExecStart=/bin/setupcon': ./chroot/lib/systemd/system/systemd-vconsole-setup.service
 
 find scripts.d -type f -executable | sort | while read l ; do
+    echo Running "$l"
     source "$l"
 done
 
