@@ -1,0 +1,3 @@
+
+chroot-run usermod -a -G pulse-access root
+chroot-run usermod -a -G pulse-access $HMRISO_USER
