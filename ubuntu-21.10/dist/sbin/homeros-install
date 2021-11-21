@@ -13,6 +13,7 @@ SQUASH_SRC=/cdrom/casper/filesystem.squashfs
 # Where we want the newly installed system to be, the values will be taken from the command line
 TARGET_GRUB_DEVICE=''
 TARGET_ROOT_DEV=''
+ESP_DEVICE=''
 
 print_help()
 {
@@ -40,6 +41,10 @@ while [ -n "$1" ]; do
 	TARGET_ROOT_DEV="$2"
 	shift
 	shift
+    elif [ "$1" == --esp ]; then
+	ESP_DEVICE="$2"
+	shift
+	shift
     else
 	echo "$THIS: unknown command line option: $1:" >&2
 	exit 1
@@ -56,6 +61,11 @@ fi
 
 if ! [ -e "$TARGET_GRUB_DEVICE" ]; then
     echo "$THIS: The grub destination device $TARGET_GRUB_DEVICE does not exist" >&2
+    exit 1
+fi
+
+if [ -n "$ESP_DEVICE" ] && ! [ -e "$ESP_DEVICE" ]; then
+    echo "$THIS: The ESP device $ESP_DEVICE does not exist" >&2
     exit 1
 fi
 
@@ -80,33 +90,37 @@ echo Squashfs image is ready
 
 echo Copying files
 cp -afd $SQUASH_MOUNT/. $TARGET_MOUNT/ &>> $LOG
-
-echo Installing grub
-for a in dev sys proc; do
-    mount --bind /$a $TARGET_MOUNT/$a &>> $LOG
-done
-grub-install --root-directory=$TARGET_MOUNT $TARGET_GRUB_DEVICE &>> $LOG
-chroot $TARGET_MOUNT grub-mkconfig -o /boot/grub/grub.cfg &>> $LOG
-for a in dev sys proc; do
-    umount $TARGET_MOUNT/$a &>> $LOG
-done
-
-echo Finalizing
-
+echo Adding new fstab entries
 TARGET_ROOT_UUID="UUID=$(blkid "$TARGET_ROOT_DEV"  | sed s/'^.*UUID="\([^"]*\)".*$'/'\1'/)"
 echo $TARGET_ROOT_DEV / ext4 noatime,errors=remount-ro 0 1 >> $TARGET_MOUNT/etc/fstab
-echo '127.0.0.1 localhost.localdomain localhost' >> $TARGET_MOUNT/etc/hosts
+if [ -n "$ESP_DEVICE" ]; then
+    echo "Adding ESP entry at $ESP_DEVICE"
+echo $ESP_DEVICE /boot/efi vfat defaults,noatime,discard 0 1 >> $TARGET_MOUNT/etc/fstab
+fi
 
+echo Installing grub
+for a in dev dev/pts sys proc; do mount --bind /$a $TARGET_MOUNT/$a &>> $LOG; done
+if [ -n "$ESP_DEVICE" ]; then
+mkdir $TARGET_MOUNT/boot/efi
+    mount $ESP_DEVICE $TARGET_MOUNT/boot/efi
+fi
+grub-install --root-directory=$TARGET_MOUNT $TARGET_GRUB_DEVICE >> $LOG
+chroot $TARGET_MOUNT grub-mkconfig -o /boot/grub/grub.cfg &>> $LOG
+if [ -n "$ESP_DEVICE" ]; then
+    umount $TARGET_MOUNT/boot/efi
+fi
+for a in dev/pts dev sys proc; do umount $TARGET_MOUNT/$a >> $LOG; done
+
+echo '127.0.0.1 localhost.localdomain localhost' >> $TARGET_MOUNT/etc/hosts
 mkdir -p $TARGET_MOUNT/etc/homeros
 cat /etc/homeros/system-start > $TARGET_MOUNT/etc/homeros/system-start
 sed -i -e s/'Master 100'/'Master 80'/ $TARGET_MOUNT/etc/homeros/system-start
 chmod 755 $TARGET_MOUNT/etc/homeros/system-start
+rm -rf $TARGET_MOUNT/sbin/homeros-install
 
 #if [[ ! -z $TARGET_SWAP_DEV ]]; then
 #	echo $TARGET_SWAP_DEV none swap defaults 0 0 >> $TARGET_MOUNT/etc/fstab
 #fi
-
-rm -rf $TARGET_MOUNT/sbin/homeros-install
 
 umount $TARGET_MOUNT $SQUASH_MOUNT &>> $LOG
 sync
