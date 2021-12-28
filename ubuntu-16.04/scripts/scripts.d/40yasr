@@ -1,8 +1,0 @@
-#!/bin/bash -evx
-
-cd ./chroot/etc/yasr
-sed -i -e s/'^\(synthesizer=.*\)$'/'#\1'/ yasr.conf
-sed -i -e s/'^.*synthesizer.*emacspeak.*$'/'synthesizer=emacspeak server'/ yasr.conf
-sed -i -e s/'^\(synthesizer port=.*\)$'/'#\1'/ yasr.conf
-sed -i -e s:'^.*synthesizer port.*eflite.*$':'synthesizer port=|/usr/bin/voiceman-emacspeak': yasr.conf
-cd ../../..

@@ -1,2 +1,0 @@
-
-chroot-run apt-get install --reinstall linux-image-$HMRISO_KERNEL

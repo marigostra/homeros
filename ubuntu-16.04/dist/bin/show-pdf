@@ -1,4 +1,0 @@
-#!/bin/bash -e
-
-/usr/bin/xpdf -fullscreen "$1" &> /dev/null
-exit $?

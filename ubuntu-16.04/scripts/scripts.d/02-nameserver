@@ -1,3 +1,0 @@
-
-echo "nameserver $LWRISO_NAMESERVER" > ./chroot/run/resolvconf/resolv.conf
-echo "nameserver $LWRISO_NAMESERVER" > /run/resolvconf/resolv.conf
