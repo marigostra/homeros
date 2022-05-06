@@ -1,0 +1,108 @@
+
+install-pkg voiceman mbrola-suite rhvoice-legacy
+
+cat <<EOF > $HMRISO_ROOT/etc/voiceman.conf
+# VoiceMan configuration for Homeros
+# Michael Pozhidaev <msp@luwrain.org>
+
+[Global]
+inet socket port = 5511
+socket = "/tmp/voiceman.socket"
+log level = info
+default language = eng
+
+[characters]
+default = "0123456789.,;:_-+=[]&<>""'/\\|?~\`!@#\$%^*(){}"
+EOF
+
+cat <<EOF > $HMRISO_ROOT/etc/voiceman.d/rhvoice.output
+
+[output]
+name = RHVoice
+type = command
+lang = rus
+synth command = "rhvoice-legacy -r %r -p %p | voiceman-trim --words"
+alsa player command = "exec aplay -"
+pitch num digits after dot = 2
+pitch min = "0.1"
+pitch aver = 1
+pitch max = "1.9"
+rate num digits after dot = 2
+rate max = "0.5"
+rate aver = 1.6
+rate min = 2
+EOF
+
+cat <<EOF > $HMRISO_ROOT/etc/voiceman.d/mbrola.output
+
+[output]
+name = mbrola
+type = command
+lang = eng
+synth command = "freephone -h /usr/lib/mbrola-suite/lexicon -m | mbrola -f %p -v %v -t %r /usr/lib/mbrola-suite/en1 - - | /usr/bin/voiceman-trim --words "
+alsa player command = "exec aplay -t raw -f s16 -c 1 -r 16000"
+replacements = "/usr/share/voiceman/replacements.mbrola"
+pitch num digits after dot = 2
+pitch min = 0.3
+pitch aver = 1
+pitch max = 2.5
+rate num digits after dot = 2
+rate min = 0.5
+rate aver = 1
+rate max = 3
+volume num digits after dot = 2
+volume min = 0
+volume aver = 2.5
+volume max = 10
+EOF
+
+cat <<EOF > $HMRISO_ROOT/usr/share/voiceman/chars-table.rus
+0:ноль
+1:один
+2:два
+3:три
+4:четыре
+5:пять
+6:шесть
+7:семь
+8:восемь
+9:девять
+.:точка
+,:запятая
+;:точка с запятой
+_:подчёркивание
+-:дефис
++:плюс
+=:равно
+[:левая квадратная
+]:правая квадратная
+&:амперсанд
+<:меньше
+>:больше
+"""":двойные кавычки
+':апостроф
+/:черта в гору
+\\:черта с горы
+|:вертикальная черта
+?:вопросительный знак
+~:тильда
+\`:обратный апостроф
+!:восклицательный знак
+@:собачка
+"#":диез
+\$:знак доллара
+%:процент
+^:возведение в степень
+*:звезда
+(:левая круглая
+):правая круглая
+{:левая фигурная
+}:правая фигурная
+":":двоеточие
+ъ:твёрдый знак
+Ъ:твёрдый знак
+ь:мягкий знак
+Ь:мягкий знак
+й:и краткое
+Й:и краткое
+EOF

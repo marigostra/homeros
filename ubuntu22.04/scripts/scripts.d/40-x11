@@ -1,0 +1,44 @@
+#!/bin/bash -e
+
+remove-pkg xserver-xorg-legacy
+
+cat <<EOF > "$HMRISO_ROOT/tmp/xwrapper.c"
+
+#include<stdlib.h>
+#include<sys/types.h>
+#include<unistd.h>
+#include<sys/wait.h>
+
+#define COMMAND "/usr/lib/xorg/Xorg"
+
+int main(int argc, char* argv[])
+{
+  int status;
+  pid_t pid = fork();
+  if (pid == (pid_t)-1)
+    {
+      perror("fork()");
+      return 1;
+    }
+  if (pid == 0)
+    {
+      int i;
+      char** a = (char**)malloc((argc + 1) * sizeof(char*));
+      a[0] = COMMAND;
+      for(i = 1;i < argc;++i)
+	a[i] = argv[i];
+      a[argc] = NULL;
+execv(COMMAND, a);
+ perror("execv()");
+ exit(EXIT_FAILURE);
+    }
+  wait(&status);
+  return WEXITSTATUS(status);
+}
+
+EOF
+
+chroot-run gcc -o/usr/lib/xorg/Xorg.wrap /tmp/xwrapper.c
+chmod 4755 "$HMRISO_ROOT/usr/lib/xorg/Xorg.wrap"
+
+rm -f "$HMRISO_ROOT/etc/X11/Xwrapper.config"

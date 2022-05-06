@@ -1,0 +1,17 @@
+
+chroot-run systemctl set-default multi-user.target
+mkdir -p "$HMRISO_ROOT/etc/systemd/system/getty@tty1.service.d"
+
+cat <<EOF > $HMRISO_ROOT/etc/systemd/system/getty@tty1.service.d/override.conf
+[Service]
+Environment="LANG=en_US.UTF-8"
+ExecStart=
+ExecStart=-/bin/openvt -c 1 -w -s -f /etc/homeros/system-start
+Type=idle
+EOF
+
+pushd $HMRISO_ROOT/etc/systemd > /dev/null
+sed -i -e s/'^.*NAutoVTs.*$'/'NAutoVTs=0'/  logind.conf
+popd > /dev/null
+
+chroot-run systemctl enable getty@tty1

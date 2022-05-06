@@ -1,0 +1,34 @@
+#!/bin/bash -e
+
+THIS="${0##*/}"
+
+[ -z "$1" ] && echo "$THIS:no Ubuntu image given" >&2 && exit 1
+
+WORK="./tmp-env/image"
+CHROOT="$WORK/iso/chroot"
+DISK="$1"
+SQUASHFSSRC="$1/casper/filesystem.squashfs"
+
+echo Unpacking
+unsquashfs -d "$WORK" "$SQUASHFSSRC" > /dev/null
+mkdir -p "$WORK/iso/disk"
+cp -r "$DISK/." "$WORK/iso/disk"
+unsquashfs -d "$CHROOT" "$SQUASHFSSRC" > /dev/null
+
+echo Preparing the image
+(
+    #cp -r dist install "$WORK/iso"
+    cp -r dist emacs scripts/. "$WORK/iso"
+    mount --bind /proc "$CHROOT/proc"
+    chroot "$WORK" /iso/image-prepare
+    umount "$CHROOT/proc"
+    ) &> /tmp/homeros-iso.log
+
+echo Packing the image
+(
+    rm -f "$WORK/iso/disk/casper/filesystem.squashfs"
+    chroot "$WORK" /iso/image-pack
+    cp "$WORK/iso/homeros.iso" homeros.iso
+    ) &>> /tmp/homeros-iso.log
+
+echo 'OK!'

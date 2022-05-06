@@ -1,0 +1,64 @@
+#!/bin/bash -evx
+
+cd /iso
+. base.sh
+
+cat <<EOF > /etc/apt/sources.list
+deb http://security.ubuntu.com/ubuntu/ focal-security main restricted universe multiverse
+deb http://ru.archive.ubuntu.com/ubuntu/ focal-updates main restricted universe multiverse
+deb http://ru.archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse
+EOF
+
+echo "nameserver $HMRISO_NAMESERVER" > "/etc/resolv.conf"
+apt-get update
+apt-get --yes install wget squashfs-tools xorriso
+
+mksquashfs chroot disk/casper/filesystem.squashfs -comp xz > /dev/null
+
+rm -rf disk/casper/filesystem.squashfs.gpg disk/md5sum.txt disk/pool disk/ubuntu 
+echo "Homeros - Release $HMRISO_ARCH ($HMRISO_DATE)" > disk/.disk/info
+echo 'http://marigostra.ru/projects/homeros/' > disk/.disk/release_notes_url
+#sed -i -e s/'Ubuntu.*$'/'Homeros '$HMRISO_DATE' - Release '$HMRISO_ARCH/ disk/README.diskdefines
+
+cat <<EOF > disk/README.ru.txt
+
+  Homeros
+
+Дистрибутив на основе Ubuntu Linux с речевым окружением Emacspeak в
+качестве основной пользовательской среды. Предназначен для опытных
+русскоговорящих пользователей GNU/Linux с нарушениями зрения.
+
+Подробную информацию см. на странице:
+http://marigostra.ru/projects/homeros/
+
+EOF
+
+pushd disk > /dev/null
+find -type f '!' -name isolinux.bin '!' -name boot.cat | while read l; do
+md5sum "$l"
+done > ../md5sum.txt
+popd  > /dev/null
+mv md5sum.txt disk
+
+wget -q "https://download.luwrain.org/compilation/ubuntu-amd64-$HMRISO_BOOT_VER.efi"
+wget -q "https://download.luwrain.org/compilation/ubuntu-amd64-$HMRISO_BOOT_VER.mbr"
+
+mv "ubuntu-amd64-$HMRISO_BOOT_VER.efi" ubuntu.efi
+mv "ubuntu-amd64-$HMRISO_BOOT_VER.mbr" ubuntu.mbr
+
+xorriso -as mkisofs \
+  -r -V "Homeros $HMRISO_ARCH $(date --iso-8601)" -J -joliet-long -l \
+  -iso-level 3 \
+  -partition_offset 16 \
+  --grub2-mbr ubuntu.mbr \
+  --mbr-force-bootable \
+  -append_partition 2 0xEF ubuntu.efi \
+  -appended_part_as_gpt \
+  -c /boot.catalog \
+  -b /boot/grub/i386-pc/eltorito.img \
+    -no-emul-boot -boot-load-size 4 -boot-info-table --grub2-boot-info \
+  -eltorito-alt-boot \
+  -e '--interval:appended_partition_2:all::' \
+    -no-emul-boot \
+  -o homeros.iso \
+  disk/

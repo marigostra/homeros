@@ -1,0 +1,27 @@
+#!/bin/bash -evx
+
+cd /iso
+. base.sh
+
+export DEBIAN_FRONTEND=noninteractive
+export HOME=/home/$HMRISO_USER
+
+#in-chroot apt-get -y remove pulseaudio pulseaudio-utils \
+#ubiquity \
+#libreoffice-core firefox thunderbird libunity9 \
+#network-manager 
+#linux-image-4.2.0-16
+#in-chroot apt-get -y autoremove
+
+# Locale
+#echo 'LANG="ru_RU.UTF-8"' > ./chroot/etc/default/locale
+# For proper Russian characters in console
+# FIXME!
+#sed -i -e s:'^ExecStart=.*$':'ExecStart=/bin/setupcon': ./chroot/lib/systemd/system/systemd-vconsole-setup.service
+
+find scripts.d -type f -executable | sort | while read l ; do
+    echo Running "$l"
+    source "$l"
+done
+
+# ISO chroot prepared!

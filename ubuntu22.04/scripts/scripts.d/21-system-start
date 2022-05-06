@@ -1,0 +1,20 @@
+
+mkdir $HMRISO_ROOT/etc/homeros
+cat <<EOF > $HMRISO_ROOT/etc/homeros/system-start
+#!/bin/bash
+# Copyright 2021 Michael Pozhidaev <msp@luwrain.org>
+
+#killall brltty
+#/sbin/brltty -t ru
+
+pulseaudio --system -D ||:
+
+export VOICEMAN_LIBAO_DRIVER=alsa
+if ! [ -e /tmp/voiceman.socket ]; then
+    /usr/bin/voicemand -d
+fi
+
+/bin/su - $HMRISO_USER -c /usr/bin/startx
+EOF
+
+chmod 755 $HMRISO_ROOT/etc/homeros/system-start

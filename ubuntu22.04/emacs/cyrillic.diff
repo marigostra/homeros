@@ -1,0 +1,12 @@
+diff -ur orig/emacspeak-speak.el new/emacspeak-speak.el
+--- orig/emacspeak-speak.el	2021-07-11 07:23:53.477138278 +0700
++++ new/emacspeak-speak.el	2021-07-11 10:43:54.712796190 +0700
+@@ -1250,7 +1250,7 @@
+     (when char
+       (cond
+        ((stringp display) (dtk-speak display))
+-       ((> char 128) (emacspeak-speak-char-name char))
++       ;((> char 128) (emacspeak-speak-char-name char))
+        ((and (not prefix)
+              (emacspeak-is-alpha-p char))
+         (dtk-speak (emacspeak-get-phonetic-string char)))

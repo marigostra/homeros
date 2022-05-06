@@ -1,0 +1,5 @@
+
+[ -d ./dist/etc ] && cp -r ./dist/etc/. $HMRISO_ROOT/etc/ ||:
+[ -d ./dist/opt ] && cp -r ./dist/opt/. $HMRISO_ROOT/opt/ ||:
+[ -d ./dist/bin ] && cp -r ./dist/bin/. $HMRISO_ROOT/usr/local/bin/ ||:
+[ -d ./dist/sbin ] && cp -r ./dist/sbin/. $HMRISO_ROOT/sbin/ ||:

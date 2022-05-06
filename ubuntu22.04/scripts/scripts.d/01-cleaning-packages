@@ -1,0 +1,29 @@
+
+
+remove-pkg libreoffice-core libreoffice-common
+remove-pkg thunderbird firefox
+remove-pkg-prefix firefox-locale
+remove-pkg libmysqlclient21 nautilus update-manager
+
+#rm-pkg $(apt-cache search libgnome | grep ^libgnome | cut -f1 -d' ')
+#rm-pkg gvfs-common gedit-common libwebkit2gtk-4.0-37:amd64 yelp
+
+#Breaks enter and escape
+#remove-pkg libatspi2.0-0:amd64
+#remove-pkg libgtk2.0  libgtk2.0-common libgtk-3-common
+#remove-pkg-prefix gnome
+
+remove-pkg   fonts-noto-cjk
+remove-pkg $(apt-cache search fonts | egrep '^fonts-(tlwg|tibetan|takao|sil|nanum|lohit|lao|khmeros|guru|arphic)' | cut -f1 -d' ')
+remove-pkg $(apt-cache search mythes | grep ^mythes | cut -f1 -d' ')
+#remove-pkg aspell dictionaries-common
+remove-pkg-prefix language-pack
+remove-pkg-prefix hunspell
+#remove-pkg-prefix ubiquity
+#remove-pkg-prefix ubuntu-wallpaper
+#remove-pkg transmission-common shotwell                                   seahorse                                   rhythmbox remmina reiserfsprogs                            language-selector-common ibus
+remove-pkg-prefix printer-driver
+
+chroot-run apt-get -y autoremove --purge snapd
+
+chroot-run apt-get -y autoremove

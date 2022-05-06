@@ -1,0 +1,8 @@
+
+chroot-run useradd -G cdrom,audio,video,users,tty -s /bin/bash $HMRISO_USER
+chroot-run cp -r /etc/skel /home/$HMRISO_USER
+[ -d ./dist/profile ] && cp -r ./dist/profile/. $HMRISO_ROOT/home/$HMRISO_USER/ ||:
+chroot-run chown -R $HMRISO_USER:$HMRISO_USER /home/$HMRISO_USER
+echo "$HMRISO_USER ALL=NOPASSWD:ALL" > "$HMRISO_ROOT/etc/sudoers.d/$HMRISO_USER"
+chmod 400 "$HMRISO_ROOT/etc/sudoers.d/$HMRISO_USER"
+rm -f "$HMRISO_ROOT/home/$HMRISO_USER/examples.desktop"

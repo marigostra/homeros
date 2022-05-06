@@ -1,0 +1,5 @@
+
+chown -R 1000:1000 $HMRISO_ROOT/home/$HMRISO_USER/
+chmod 700 $HMRISO_ROOT/home/$HMRISO_USER/
+rm -f $HMRISO_ROOT/home/$HMRISO_USER/.Xauthority
+chown -R root:root $HMRISO_ROOT/opt/

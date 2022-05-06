@@ -1,0 +1,128 @@
+#!/bin/bash -e
+# Copyright 2021 Michael Pozhidaev <msp@luwrain.org>
+# Copyright 2015 Roman Volovodov <gr.rPman@gmail.com>
+
+THIS="${0##*/}"
+
+# The log location
+LOG=/tmp/homeros-install.log
+
+# Where we expecting the live CD squashfs image to be
+SQUASH_SRC=/cdrom/casper/filesystem.squashfs
+
+# Where we want the newly installed system to be, the values will be taken from the command line
+TARGET_GRUB_DEVICE=''
+TARGET_ROOT_DEV=''
+ESP_DEVICE=''
+
+print_help()
+{
+cat <<EOF
+$THIS: The Homeros installer
+
+Usage:
+    $THIS [--help] [--root DEVICE] [--boot DEVICE]
+
+Options:
+  --boot DEVICE - where you want the GRUB loader to be installed
+  --root DEVICE - what partition must be used for the root filesystem (be careful, will be formatted)
+EOF
+}
+
+while [ -n "$1" ]; do
+    if [ "$1" == --help ]; then
+	print_help
+	exit 0
+    elif [ "$1" == --boot ]; then
+	TARGET_GRUB_DEVICE="$2"
+	shift
+	shift
+    elif [ "$1" == --root ]; then
+	TARGET_ROOT_DEV="$2"
+	shift
+	shift
+    elif [ "$1" == --esp ]; then
+	ESP_DEVICE="$2"
+	shift
+	shift
+    else
+	echo "$THIS: unknown command line option: $1:" >&2
+	exit 1
+    fi
+done
+
+[ -z "$TARGET_ROOT_DEV" ] && echo "$THIS: No root partition" >&2 && exit 1
+[ -z "$TARGET_GRUB_DEVICE" ] && echo "$THIS: No grub destination device" >&2 && exit 1
+
+if ! [ -e "$TARGET_ROOT_DEV" ]; then
+    echo "$THIS: The root device $TARGET_ROOT_DEV does not exist" >&2
+    exit 1
+fi
+
+if ! [ -e "$TARGET_GRUB_DEVICE" ]; then
+    echo "$THIS: The grub destination device $TARGET_GRUB_DEVICE does not exist" >&2
+    exit 1
+fi
+
+if [ -n "$ESP_DEVICE" ] && ! [ -e "$ESP_DEVICE" ]; then
+    echo "$THIS: The ESP device $ESP_DEVICE does not exist" >&2
+    exit 1
+fi
+
+# Where we want the root filesystem to be mounted
+TARGET_MOUNT=$(mktemp -d)
+
+# Where we want to get squashfs image mounted
+SQUASH_MOUNT=$(mktemp -d)
+
+umount $TARGET_ROOT_DEV &> /dev/null ||:
+rm -f $LOG
+
+echo Formatting the root filesystem "($TARGET_ROOT_DEV)"
+mkfs.ext4 "$TARGET_ROOT_DEV"  &>> $LOG
+tune2fs -c 0 "$TARGET_ROOT_DEV"  &>> $LOG
+tune2fs -i 0 "$TARGET_ROOT_DEV"  &>> $LOG
+mount $TARGET_ROOT_DEV $TARGET_MOUNT &>> $LOG
+echo The root filesystem is ready and mounted
+
+mount $SQUASH_SRC $SQUASH_MOUNT &>> $LOG
+echo Squashfs image is ready
+
+echo Copying files
+cp -afd $SQUASH_MOUNT/. $TARGET_MOUNT/ &>> $LOG
+echo Adding new fstab entries
+TARGET_ROOT_UUID="UUID=$(blkid "$TARGET_ROOT_DEV"  | sed s/'^.*UUID="\([^"]*\)".*$'/'\1'/)"
+echo $TARGET_ROOT_DEV / ext4 noatime,errors=remount-ro 0 1 >> $TARGET_MOUNT/etc/fstab
+if [ -n "$ESP_DEVICE" ]; then
+    echo "Adding ESP entry at $ESP_DEVICE"
+echo $ESP_DEVICE /boot/efi vfat defaults,noatime,discard 0 1 >> $TARGET_MOUNT/etc/fstab
+fi
+
+echo Installing grub
+for a in dev dev/pts sys proc; do mount --bind /$a $TARGET_MOUNT/$a &>> $LOG; done
+if [ -n "$ESP_DEVICE" ]; then
+mkdir $TARGET_MOUNT/boot/efi
+    mount $ESP_DEVICE $TARGET_MOUNT/boot/efi
+fi
+grub-install --root-directory=$TARGET_MOUNT $TARGET_GRUB_DEVICE >> $LOG
+chroot $TARGET_MOUNT grub-mkconfig -o /boot/grub/grub.cfg &>> $LOG
+if [ -n "$ESP_DEVICE" ]; then
+    umount $TARGET_MOUNT/boot/efi
+fi
+for a in dev/pts dev sys proc; do umount $TARGET_MOUNT/$a >> $LOG; done
+
+echo '127.0.0.1 localhost.localdomain localhost' >> $TARGET_MOUNT/etc/hosts
+mkdir -p $TARGET_MOUNT/etc/homeros
+cat /etc/homeros/system-start > $TARGET_MOUNT/etc/homeros/system-start
+sed -i -e s/'Master 100'/'Master 80'/ $TARGET_MOUNT/etc/homeros/system-start
+chmod 755 $TARGET_MOUNT/etc/homeros/system-start
+rm -rf $TARGET_MOUNT/sbin/homeros-install
+
+#if [[ ! -z $TARGET_SWAP_DEV ]]; then
+#	echo $TARGET_SWAP_DEV none swap defaults 0 0 >> $TARGET_MOUNT/etc/fstab
+#fi
+
+umount $TARGET_MOUNT $SQUASH_MOUNT &>> $LOG
+sync
+
+echo Homeros installed

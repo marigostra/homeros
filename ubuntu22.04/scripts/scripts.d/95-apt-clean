@@ -1,0 +1,3 @@
+
+chroot-run apt-get -y autoremove
+chroot-run  apt-get clean
