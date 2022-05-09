@@ -1,6 +1,6 @@
 
 cat <<EOF > ./chroot/etc/apt/sources.list
-#deb https://download.luwrain.org/repo/ luwrain $HMRISO_RELEASE
+deb https://download.luwrain.org/repo/ luwrain $HMRISO_RELEASE
 deb http://security.ubuntu.com/ubuntu/ $HMRISO_RELEASE-security main restricted universe multiverse
 deb http://ru.archive.ubuntu.com/ubuntu/ $HMRISO_RELEASE-updates main restricted universe multiverse
 deb http://ru.archive.ubuntu.com/ubuntu/ $HMRISO_RELEASE main restricted universe multiverse
